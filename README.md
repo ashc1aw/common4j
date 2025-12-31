@@ -6,9 +6,8 @@ common4j - A Lightweight and Efficient Java Utility Library
 
 🌐 Language Switch
 
-- 🇨🇳 Chinese: [README_zh_CN.md](./README_zh_CN.md)
-
-- 🇺🇸 English: [README.md](./README.md)
+- 🇨🇳 [Chinese](./README_zh_CN.md)
+- 🇺🇸 [English](./README.md)
 
 
 ---
@@ -20,13 +19,17 @@ common4j is a lightweight and efficient Java development toolkit suitable for va
 ---
 🛠️ Maven Import (To Be Completed)
 
-Add the following to your pom.xml:
+Add the following to your `pom.xml` :
+
+
+```xml
 
 <dependency>
     <groupId>cc.ashclaw</groupId>
     <artifactId>common4j</artifactId>
     <version>1.0.0</version>
 </dependency>
+```
 
 Note: Please replace the version number with the latest official release version.
 
@@ -84,4 +87,4 @@ Long-term Goals (6-12 Months)
 ---
 📜 Open Source License
 
-[Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0).
+[Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)

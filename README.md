@@ -1,7 +1,5 @@
 common4j - A Lightweight and Efficient Java Utility Library
 
-
----
 ![common4j banner](./docs/images/banner.png)
 
 🌐 Language Switch
@@ -10,13 +8,11 @@ common4j - A Lightweight and Efficient Java Utility Library
 - 🇺🇸 [English](./README.md)
 
 
----
 📖 Project Introduction
 
 common4j is a lightweight and efficient Java development toolkit suitable for various project scenarios.
 
 
----
 🛠️ Maven Import (To Be Completed)
 
 Add the following to your `pom.xml` :
@@ -34,7 +30,6 @@ Add the following to your `pom.xml` :
 Note: Please replace the version number with the latest official release version.
 
 
----
 🤝 How to Contribute
 
 We warmly welcome community members to contribute to the project!
@@ -58,7 +53,6 @@ Code Submission Requirements:
 - Ensure all existing tests pass
 
 
----
 📅 Future Plans
 
 Short-term Goals (1-3 Months)
@@ -84,7 +78,6 @@ Long-term Goals (6-12 Months)
 - Expand enterprise-level applications
 
 
----
 📜 Open Source License
 
 [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)

@@ -10,9 +10,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>common4j-core</module>
-        <module>example</module>
-        <module>example/example-en</module>
-        <module>example/example-zh</module>
         <module>common4j-poi</module>
         <module>common4j-sse</module>
         <module>common4j-log</module>

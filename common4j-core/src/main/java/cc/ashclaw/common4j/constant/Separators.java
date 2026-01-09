@@ -28,8 +28,7 @@ public final class Separators {
         throw new UnsupportedOperationException("Separators cannot be instantiated");
     }
 
-    // ==================== Time Separators ====================
-    // ==================== 时间分隔符 ====================
+    
 
     /**
      * ISO datetime separator: T
@@ -66,8 +65,7 @@ public final class Separators {
      */
     public static final String MILLISECOND = ".";
 
-    // ==================== System Path Separators ====================
-    // ==================== 系统路径分隔符 ====================
+    
 
     /**
      * File path separator (system-dependent)
@@ -83,8 +81,7 @@ public final class Separators {
      */
     public static final String PATH_SEPARATOR = File.pathSeparator;
 
-    // ==================== Common Punctuation Separators ====================
-    // ==================== 常用标点符号分隔符 ====================
+    
 
     /**
      * Comma separator: ,
@@ -170,8 +167,7 @@ public final class Separators {
      */
     public static final String QUESTION_MARK = "?";
 
-    // ==================== Whitespace Separators ====================
-    // ==================== 空白字符分隔符 ====================
+    
 
     /**
      * Tab separator: \t
@@ -215,8 +211,7 @@ public final class Separators {
      */
     public static final String ZERO_WIDTH_SPACE = "\u200B";
 
-    // ==================== Combined Separators ====================
-    // ==================== 组合分隔符 ====================
+    
 
     /**
      * Comma followed by space: ", "
@@ -246,8 +241,7 @@ public final class Separators {
      */
     public static final String PIPE_SPACE = "| ";
 
-    // ==================== Special Purpose Separators ====================
-    // ==================== 特殊用途分隔符 ====================
+    
 
     /**
      * JSON array/object element separator: ,

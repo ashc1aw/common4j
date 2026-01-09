@@ -27,8 +27,7 @@ public final class DateFormats {
         throw new UnsupportedOperationException("DateFormats cannot be instantiated");
     }
 
-    // ========== ISO 8601 Standard Formats ==========
-    // ========== ISO 8601 标准格式 ==========
+    
 
     /**
      * ISO 8601 Basic date format: yyyyMMdd
@@ -93,8 +92,7 @@ public final class DateFormats {
      */
     public static final String ISO_DATETIME_WITH_MILLIS_TIMEZONE = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX";
 
-    // ========== RFC Formats ==========
-    // ========== RFC 格式 ==========
+    
 
     /**
      * RFC 1123 date-time format: EEE, dd MMM yyyy HH:mm:ss zzz
@@ -110,8 +108,7 @@ public final class DateFormats {
      */
     public static final String RFC_3339 = "yyyy-MM-dd'T'HH:mm:ssXXX";
 
-    // ========== Chinese Formats ==========
-    // ========== 中文格式 ==========
+    
 
     /**
      * Chinese date format: yyyy年MM月dd日
@@ -134,8 +131,7 @@ public final class DateFormats {
      */
     public static final String CHINESE_DATE_SHORT = "yyyy年M月d日";
 
-    // ========== US Formats ==========
-    // ========== 美式格式 ==========
+    
 
     /**
      * US date format: MM/dd/yyyy
@@ -151,8 +147,7 @@ public final class DateFormats {
      */
     public static final String US_DATETIME = "MM/dd/yyyy HH:mm:ss";
 
-    // ========== Common Display Formats ==========
-    // ========== 常用显示格式 ==========
+    
 
     /**
      * Standard date-time format: yyyy-MM-dd HH:mm:ss

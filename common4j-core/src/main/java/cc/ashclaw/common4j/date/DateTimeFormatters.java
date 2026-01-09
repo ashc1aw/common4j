@@ -30,41 +30,41 @@ public final class DateTimeFormatters {
     }
 
     /**
-     * Standard date-time formatter: yyyy-MM-dd HH:mm:ss
+     * Standard date-time formatter: yyyy-MM-dd HH:mm:ss.
      * <p>
-     * 标准日期时间格式化器：yyyy-MM-dd HH:mm:ss
+     * 标准日期时间格式化器：yyyy-MM-dd HH:mm:ss。
      */
     public static final DateTimeFormatter FMT_DATETIME = 
             DateTimeFormatter.ofPattern(DateFormats.STANDARD_DATETIME);
     
     /**
-     * Standard date formatter: yyyy-MM-dd
+     * Standard date formatter: yyyy-MM-dd.
      * <p>
-     * 标准日期格式化器：yyyy-MM-dd
+     * 标准日期格式化器：yyyy-MM-dd。
      */
     public static final DateTimeFormatter FMT_DATE = 
             DateTimeFormatter.ofPattern(DateFormats.STANDARD_DATE);
     
     /**
-     * Standard time formatter: HH:mm:ss
+     * Standard time formatter: HH:mm:ss.
      * <p>
-     * 标准时间格式化器：HH:mm:ss
+     * 标准时间格式化器：HH:mm:ss。
      */
     public static final DateTimeFormatter FMT_TIME = 
             DateTimeFormatter.ofPattern(DateFormats.STANDARD_TIME);
     
     /**
-     * Compact date formatter: yyyyMMdd
+     * Compact date formatter: yyyyMMdd.
      * <p>
-     * 紧凑日期格式化器：yyyyMMdd
+     * 紧凑日期格式化器：yyyyMMdd。
      */
     public static final DateTimeFormatter FMT_COMPACT = 
             DateTimeFormatter.ofPattern(DateFormats.COMPACT_DATE);
     
     /**
-     * Hour-minute time formatter: HH:mm
+     * Hour-minute time formatter: HH:mm.
      * <p>
-     * 小时分钟时间格式化器：HH:mm
+     * 小时分钟时间格式化器：HH:mm。
      */
     public static final DateTimeFormatter FMT_TIME_HM = 
             DateTimeFormatter.ofPattern(DateFormats.HOUR_MINUTE);

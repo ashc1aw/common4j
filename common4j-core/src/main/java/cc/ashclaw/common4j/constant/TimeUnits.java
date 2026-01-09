@@ -84,9 +84,6 @@ public final class TimeUnits {
      */
     public static final long YEAR_AVERAGE = (long) (365.25 * DAY);
 
-    // ========== Duration Constants (JDK 17+) ==========
-    // ========== JDK 17+ 的 Duration 常量（基于 JDK 25） ==========
-
     /**
      * Duration of one day.
      * <p>

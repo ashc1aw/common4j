@@ -4,9 +4,11 @@
 package cc.ashclaw.common4j.date;
 
 import cc.ashclaw.common4j.constant.DateFormats;
+import cc.ashclaw.common4j.constant.TimeZones;
 import cc.ashclaw.common4j.util.StringUtils;
 
 import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -72,6 +74,42 @@ public final class TimeUtils {
      */
     public static String format(LocalTime time) {
         return time == null ? null : DEFAULT_FORMATTER.format(time);
+    }
+
+    /**
+     * Formats a long timestamp (milliseconds since epoch) to a string using the specified pattern.
+     * <p>
+     * 使用指定的模式将长整型时间戳（自纪元以来的毫秒数）格式化为字符串。
+     *
+     * @param timestamp Long timestamp in milliseconds
+     * @param pattern Format pattern string
+     * @return Formatted time string
+     * <p>
+     * @param timestamp 长整型时间戳（毫秒）
+     * @param pattern 格式模式字符串
+     * @return 格式化后的时间字符串
+     */
+    public static String format(long timestamp, String pattern) {
+        return DateTimeUtils.format(Instant.ofEpochMilli(timestamp)
+                .atZone(TimeZones.SYSTEM_ZONE)
+                .toLocalDateTime(), pattern);
+    }
+
+    /**
+     * Formats a long timestamp (milliseconds since epoch) to a string using the default pattern.
+     * <p>
+     * 使用默认模式将长整型时间戳（自纪元以来的毫秒数）格式化为字符串。
+     *
+     * @param timestamp Long timestamp in milliseconds
+     * @return Formatted time string
+     * <p>
+     * @param timestamp 长整型时间戳（毫秒）
+     * @return 格式化后的时间字符串
+     */
+    public static String format(long timestamp) {
+        return DateTimeUtils.format(Instant.ofEpochMilli(timestamp)
+                .atZone(TimeZones.SYSTEM_ZONE)
+                .toLocalDateTime());
     }
 
     /**

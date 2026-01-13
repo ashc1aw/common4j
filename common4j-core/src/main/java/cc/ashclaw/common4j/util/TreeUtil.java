@@ -127,15 +127,20 @@ public final class TreeUtil {
             return new ArrayList<>();
         }
 
-        // Group nodes by parent ID
+        // Group non-root nodes by parent ID
         var nodesByParentId = nodes.stream()
+                .filter(node -> node.getParentId() != null)
                 .collect(Collectors.groupingBy(TreeNode::getParentId));
 
-        // Find root nodes (nodes with no parent)
-        return nodes.stream()
+        // Find root nodes (nodes with no parent) and build tree
+        List<E> rootNodes = nodes.stream()
                 .filter(node -> node.getParentId() == null)
-                .peek(node -> buildTreeRecursive(node, nodesByParentId))
                 .collect(Collectors.toList());
+
+        // Build tree recursively for each root node
+        rootNodes.forEach(node -> buildTreeRecursive(node, nodesByParentId));
+
+        return rootNodes;
     }
 
     /**

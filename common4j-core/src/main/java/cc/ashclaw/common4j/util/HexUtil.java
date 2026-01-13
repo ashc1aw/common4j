@@ -138,6 +138,7 @@ public final class HexUtil {
         if (hex == null) {
             throw new NumberFormatException("Hex string cannot be null");
         }
-        return Integer.parseInt(hex, 16);
+        // Use parseUnsignedInt for handling large values that represent negative numbers
+        return Integer.parseUnsignedInt(hex, 16);
     }
 }

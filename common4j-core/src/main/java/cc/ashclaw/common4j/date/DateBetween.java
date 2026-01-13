@@ -67,6 +67,11 @@ public final class DateBetween {
      */
     public static long hoursBetween(LocalTime start, LocalTime end) {
         if (start == null || end == null) return 0;
-        return Math.abs(ChronoUnit.HOURS.between(start, end));
+        long hours = Math.abs(ChronoUnit.HOURS.between(start, end));
+        // Handle cross-day cases
+        if (hours > 12) {
+            hours = 24 - hours;
+        }
+        return hours;
     }
 }

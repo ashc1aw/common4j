@@ -3,6 +3,7 @@
 
 package cc.ashclaw.common4j.thread;
 
+import cc.ashclaw.common4j.exception.ThreadPoolException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -54,6 +55,27 @@ public final class ThreadPoolUtil {
      */
     private ThreadPoolUtil() {
         throw new UnsupportedOperationException("This class cannot be instantiated.");
+    }
+
+    /**
+     * Validates if the executor service is valid and not shutdown.
+     * <p>
+     * 验证执行器服务是否有效且未关闭。
+     *
+     * @param executor the executor service to validate
+     *                 <p>
+     *                 要验证的执行器服务
+     * @throws ThreadPoolException if the executor is null or already shutdown
+     *                             <p>
+     *                             如果执行器为null或已关闭则抛出ThreadPoolException
+     */
+    private static void validateExecutor(ExecutorService executor) {
+        if (executor == null) {
+            throw new ThreadPoolException("Executor service cannot be null.");
+        }
+        if (executor.isShutdown()) {
+            throw new ThreadPoolException("Executor service has already been shutdown.");
+        }
     }
 
     /**

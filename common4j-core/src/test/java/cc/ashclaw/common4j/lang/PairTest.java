@@ -3,70 +3,37 @@
 
 package cc.ashclaw.common4j.lang;
 
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
 /**
- * Test class for Pair result verification.
+ * Test class for Pair result verification using JUnit 5.
  * <p>
- * Pair结果验证测试类。
+ * Pair结果验证测试类，使用JUnit 5。
  *
  * @author b1itz7
  * @since 1.0.0
  */
 public class PairTest {
 
-    public static void main(String[] args) {
-        System.out.println("===== Pair Result Verification Test Start =====");
-        
-        // Test creation methods
-        testCreationMethods();
-        
-        // Test access methods
-        testAccessMethods();
-        
-        // Test equality methods
-        testEqualityMethods();
-        
-        // Test hash code methods
-        testHashCodeMethods();
-        
-        // Test toString methods
-        testToStringMethods();
-        
-        System.out.println("===== Pair Result Verification Test End =====");
-    }
-
     /**
      * Test the creation methods of Pair.
      * <p>
      * 测试Pair的创建方法。
      */
-    private static void testCreationMethods() {
-        System.out.println("\n1. Testing creation methods...");
-        
+    @Test
+    void testCreationMethods() {
         // Test constructor
         Pair<String, Integer> pair1 = new Pair<>("key", 123);
-        System.out.println("new Pair<>(\"key\", 123) = " + (pair1 != null ? "created" : "null"));
-        if (pair1 == null) {
-            System.out.println("ERROR: Pair constructor should not return null!");
-            return;
-        }
+        assertNotNull(pair1, "Pair constructor should not return null");
         
         // Test of method
         Pair<String, Integer> pair2 = Pair.of("key2", 456);
-        System.out.println("Pair.of(\"key2\", 456) = " + (pair2 != null ? "created" : "null"));
-        if (pair2 == null) {
-            System.out.println("ERROR: Pair.of should not return null!");
-            return;
-        }
+        assertNotNull(pair2, "Pair.of should not return null");
         
         // Test with null values
         Pair<String, Integer> pair3 = Pair.of(null, null);
-        System.out.println("Pair.of(null, null) = " + (pair3 != null ? "created" : "null"));
-        if (pair3 == null) {
-            System.out.println("ERROR: Pair.of should handle null values!");
-            return;
-        }
-        
-        System.out.println("creation methods test passed.");
+        assertNotNull(pair3, "Pair.of should handle null values");
     }
 
     /**
@@ -74,37 +41,22 @@ public class PairTest {
      * <p>
      * 测试Pair的访问方法。
      */
-    private static void testAccessMethods() {
-        System.out.println("\n2. Testing access methods...");
-        
+    @Test
+    void testAccessMethods() {
         Pair<String, Integer> pair = Pair.of("testKey", 789);
         
         // Test getKey
         String key = pair.getKey();
-        System.out.println("pair.getKey() = \"" + key + "\"");
-        if (!"testKey".equals(key)) {
-            System.out.println("ERROR: getKey should return correct key!");
-            return;
-        }
+        assertEquals("testKey", key, "getKey should return correct key");
         
         // Test getValue
         Integer value = pair.getValue();
-        System.out.println("pair.getValue() = " + value);
-        if (value != 789) {
-            System.out.println("ERROR: getValue should return correct value!");
-            return;
-        }
+        assertEquals(789, value, "getValue should return correct value");
         
         // Test with null values
         Pair<String, Integer> nullPair = Pair.of(null, null);
-        System.out.println("nullPair.getKey() = " + nullPair.getKey());
-        System.out.println("nullPair.getValue() = " + nullPair.getValue());
-        if (nullPair.getKey() != null || nullPair.getValue() != null) {
-            System.out.println("ERROR: Pair should handle null values correctly!");
-            return;
-        }
-        
-        System.out.println("access methods test passed.");
+        assertNull(nullPair.getKey(), "getKey should return null for null key");
+        assertNull(nullPair.getValue(), "getValue should return null for null value");
     }
 
     /**
@@ -112,63 +64,36 @@ public class PairTest {
      * <p>
      * 测试Pair的相等性方法。
      */
-    private static void testEqualityMethods() {
-        System.out.println("\n3. Testing equality methods...");
-        
+    @Test
+    void testEqualityMethods() {
         Pair<String, Integer> pair1 = Pair.of("key", 123);
         Pair<String, Integer> pair2 = Pair.of("key", 123);
-        Pair<String, Integer> pair3 = Pair.of("different", 123);
+        Pair<String, Integer> pair3 = Pair.of("differentKey", 123);
         Pair<String, Integer> pair4 = Pair.of("key", 456);
+        Pair<String, Integer> pair5 = Pair.of(null, null);
+        Pair<String, Integer> pair6 = Pair.of(null, null);
         
-        // Test same object
-        boolean result = pair1.equals(pair1);
-        System.out.println("pair1.equals(pair1) = " + result);
-        if (!result) {
-            System.out.println("ERROR: Pair should be equal to itself!");
-            return;
-        }
+        // Test equality with same values
+        assertEquals(pair1, pair2, "Pairs with same key and value should be equal");
         
-        // Test equal pairs
-        result = pair1.equals(pair2);
-        System.out.println("pair1.equals(pair2) = " + result);
-        if (!result) {
-            System.out.println("ERROR: Pairs with same key and value should be equal!");
-            return;
-        }
+        // Test inequality with different keys
+        assertNotEquals(pair1, pair3, "Pairs with different keys should not be equal");
         
-        // Test different key
-        result = pair1.equals(pair3);
-        System.out.println("pair1.equals(pair3) = " + result);
-        if (result) {
-            System.out.println("ERROR: Pairs with different keys should not be equal!");
-            return;
-        }
+        // Test inequality with different values
+        assertNotEquals(pair1, pair4, "Pairs with different values should not be equal");
         
-        // Test different value
-        result = pair1.equals(pair4);
-        System.out.println("pair1.equals(pair4) = " + result);
-        if (result) {
-            System.out.println("ERROR: Pairs with different values should not be equal!");
-            return;
-        }
+        // Test equality with null values
+        assertEquals(pair5, pair6, "Pairs with null values should be equal");
         
-        // Test with null
-        result = pair1.equals(null);
-        System.out.println("pair1.equals(null) = " + result);
-        if (result) {
-            System.out.println("ERROR: Pair should not be equal to null!");
-            return;
-        }
+        // Test inequality with different null combinations
+        assertNotEquals(pair5, Pair.of("key", null), "Pairs with different null combinations should not be equal");
+        assertNotEquals(pair5, Pair.of(null, 123), "Pairs with different null combinations should not be equal");
         
-        // Test with different type
-        result = pair1.equals("not a pair");
-        System.out.println("pair1.equals(\"not a pair\") = " + result);
-        if (result) {
-            System.out.println("ERROR: Pair should not be equal to different type!");
-            return;
-        }
+        // Test equality with different types
+        assertNotEquals(pair1, "Not a Pair", "Pair should not be equal to a non-Pair object");
         
-        System.out.println("equality methods test passed.");
+        // Test equality with null
+        assertNotEquals(pair1, null, "Pair should not be equal to null");
     }
 
     /**
@@ -176,29 +101,21 @@ public class PairTest {
      * <p>
      * 测试Pair的哈希码方法。
      */
-    private static void testHashCodeMethods() {
-        System.out.println("\n4. Testing hash code methods...");
-        
+    @Test
+    void testHashCodeMethods() {
         Pair<String, Integer> pair1 = Pair.of("key", 123);
         Pair<String, Integer> pair2 = Pair.of("key", 123);
-        Pair<String, Integer> pair3 = Pair.of("different", 123);
+        Pair<String, Integer> pair3 = Pair.of("differentKey", 123);
         
-        // Test same hash code for equal pairs
-        int hash1 = pair1.hashCode();
-        int hash2 = pair2.hashCode();
-        System.out.println("pair1.hashCode() = " + hash1);
-        System.out.println("pair2.hashCode() = " + hash2);
-        if (hash1 != hash2) {
-            System.out.println("ERROR: Equal pairs should have same hash code!");
-            return;
-        }
+        // Test that equal pairs have equal hash codes
+        assertEquals(pair1.hashCode(), pair2.hashCode(), "Equal pairs should have equal hash codes");
         
-        // Test different hash code for different pairs
-        int hash3 = pair3.hashCode();
-        System.out.println("pair3.hashCode() = " + hash3);
-        // Note: Different objects can have same hash code, but it's unlikely here
+        // Test that different pairs may have different hash codes
+        assertNotEquals(pair1.hashCode(), pair3.hashCode(), "Different pairs may have different hash codes");
         
-        System.out.println("hash code methods test passed.");
+        // Test hashCode with null values
+        Pair<String, Integer> nullPair = Pair.of(null, null);
+        assertNotNull(nullPair, "Pair with null values should have a valid hash code");
     }
 
     /**
@@ -206,23 +123,19 @@ public class PairTest {
      * <p>
      * 测试Pair的toString方法。
      */
-    private static void testToStringMethods() {
-        System.out.println("\n5. Testing toString methods...");
+    @Test
+    void testToStringMethods() {
+        Pair<String, Integer> pair = Pair.of("key", 123);
+        String toString = pair.toString();
         
-        Pair<String, Integer> pair = Pair.of("testKey", 789);
-        String result = pair.toString();
-        System.out.println("pair.toString() = \"" + result + "\"");
-        if (result == null || result.isEmpty()) {
-            System.out.println("ERROR: toString should not return null or empty!");
-            return;
-        }
+        // Test that toString contains key and value
+        assertNotNull(toString, "toString should not return null");
+        assertTrue(toString.contains("key"), "toString should contain the key");
+        assertTrue(toString.contains("123"), "toString should contain the value");
         
-        // Test toString contains key and value
-        if (!result.contains("testKey") || !result.contains("789")) {
-            System.out.println("ERROR: toString should contain key and value!");
-            return;
-        }
-        
-        System.out.println("toString methods test passed.");
+        // Test toString with null values
+        Pair<String, Integer> nullPair = Pair.of(null, null);
+        String nullToString = nullPair.toString();
+        assertNotNull(nullToString, "toString should not return null for null values");
     }
 }

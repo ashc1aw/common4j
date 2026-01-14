@@ -3,67 +3,48 @@
 
 package cc.ashclaw.common4j.lang;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.Test;
+
 /**
- * Test class for ClassUtil result verification.
+ * Test class for ClassUtil result verification using JUnit 5.
  * <p>
- * ClassUtil结果验证测试类。
+ * ClassUtil结果验证测试类，使用JUnit 5。
  *
  * @author b1itz7
  * @since 1.0.0
  */
 public class ClassUtilTest {
 
-    public static void main(String[] args) {
-        System.out.println("===== ClassUtil Result Verification Test Start =====");
-        
-        // Test class loading methods
-        testClassLoadingMethods();
-        
-        // Test class information methods
-        testClassInformationMethods();
-        
-        // Test class type checking methods
-        testClassTypeCheckingMethods();
-        
-        System.out.println("===== ClassUtil Result Verification Test End =====");
-    }
-
     /**
      * Test the class loading methods of ClassUtil.
      * <p>
      * 测试ClassUtil的类加载方法。
      */
-    private static void testClassLoadingMethods() {
-        System.out.println("\n1. Testing class loading methods...");
-        
+    @Test
+    void testClassLoadingMethods() {
         try {
             // Test loadClass
             Class<?> clazz = ClassUtil.loadClass("java.lang.String");
-            System.out.println("loadClass(\"java.lang.String\") = " + clazz.getName());
-            if (clazz == null) {
-                System.out.println("ERROR: loadClass should not return null for valid class!");
-                return;
-            }
+            assertNotNull(clazz, "loadClass should not return null for valid class");
+            assertEquals("java.lang.String", clazz.getName(), "loadClass should return correct class");
             
             // Test loadClassQuietly
             Class<?> clazzQuiet = ClassUtil.loadClassQuietly("java.lang.Integer");
-            System.out.println("loadClassQuietly(\"java.lang.Integer\") = " + (clazzQuiet != null ? clazzQuiet.getName() : "null"));
-            if (clazzQuiet == null) {
-                System.out.println("ERROR: loadClassQuietly should not return null for valid class!");
-                return;
-            }
+            assertNotNull(clazzQuiet, "loadClassQuietly should not return null for valid class");
+            assertEquals("java.lang.Integer", clazzQuiet.getName(), "loadClassQuietly should return correct class");
             
             // Test loadClassQuietly with invalid class
             Class<?> invalidClazz = ClassUtil.loadClassQuietly("com.invalid.Class");
-            System.out.println("loadClassQuietly(\"com.invalid.Class\") = " + invalidClazz);
-            if (invalidClazz != null) {
-                System.out.println("ERROR: loadClassQuietly should return null for invalid class!");
-                return;
-            }
+            assertNull(invalidClazz, "loadClassQuietly should return null for invalid class");
             
-            System.out.println("class loading methods test passed.");
         } catch (Exception e) {
-            System.out.println("ERROR in class loading methods: " + e.getMessage());
+            fail("Exception in class loading methods: " + e.getMessage(), e);
         }
     }
 
@@ -72,34 +53,19 @@ public class ClassUtilTest {
      * <p>
      * 测试ClassUtil的类信息方法。
      */
-    private static void testClassInformationMethods() {
-        System.out.println("\n2. Testing class information methods...");
-        
+    @Test
+    void testClassInformationMethods() {
         // Test getCanonicalName
         String canonicalName = ClassUtil.getCanonicalName(String.class);
-        System.out.println("getCanonicalName(String.class) = \"" + canonicalName + "\"");
-        if (!"java.lang.String".equals(canonicalName)) {
-            System.out.println("ERROR: getCanonicalName should return full class name!");
-            return;
-        }
+        assertEquals("java.lang.String", canonicalName, "getCanonicalName should return full class name");
         
         // Test getSimpleName
         String simpleName = ClassUtil.getSimpleName(String.class);
-        System.out.println("getSimpleName(String.class) = \"" + simpleName + "\"");
-        if (!"String".equals(simpleName)) {
-            System.out.println("ERROR: getSimpleName should return simple class name!");
-            return;
-        }
+        assertEquals("String", simpleName, "getSimpleName should return simple class name");
         
         // Test getPackageName
         String packageName = ClassUtil.getPackageName(String.class);
-        System.out.println("getPackageName(String.class) = \"" + packageName + "\"");
-        if (!"java.lang".equals(packageName)) {
-            System.out.println("ERROR: getPackageName should return package name!");
-            return;
-        }
-        
-        System.out.println("class information methods test passed.");
+        assertEquals("java.lang", packageName, "getPackageName should return package name");
     }
 
     /**
@@ -107,47 +73,24 @@ public class ClassUtilTest {
      * <p>
      * 测试ClassUtil的类类型检查方法。
      */
-    private static void testClassTypeCheckingMethods() {
-        System.out.println("\n3. Testing class type checking methods...");
-        
+    @Test
+    void testClassTypeCheckingMethods() {
         // Test isPrimitive
         boolean result = ClassUtil.isPrimitive(int.class);
-        System.out.println("isPrimitive(int.class) = " + result);
-        if (!result) {
-            System.out.println("ERROR: isPrimitive should return true for primitive type!");
-            return;
-        }
+        assertTrue(result, "isPrimitive should return true for primitive type");
         
         result = ClassUtil.isPrimitive(String.class);
-        System.out.println("isPrimitive(String.class) = " + result);
-        if (result) {
-            System.out.println("ERROR: isPrimitive should return false for non-primitive type!");
-            return;
-        }
+        assertFalse(result, "isPrimitive should return false for non-primitive type");
         
         // Test isArray
         result = ClassUtil.isArray(int[].class);
-        System.out.println("isArray(int[].class) = " + result);
-        if (!result) {
-            System.out.println("ERROR: isArray should return true for array type!");
-            return;
-        }
+        assertTrue(result, "isArray should return true for array type");
         
         result = ClassUtil.isArray(String.class);
-        System.out.println("isArray(String.class) = " + result);
-        if (result) {
-            System.out.println("ERROR: isArray should return false for non-array type!");
-            return;
-        }
+        assertFalse(result, "isArray should return false for non-array type");
         
         // Test isAssignable
         result = ClassUtil.isAssignable(Number.class, Integer.class);
-        System.out.println("isAssignable(Number.class, Integer.class) = " + result);
-        if (!result) {
-            System.out.println("ERROR: isAssignable should return true for assignable types!");
-            return;
-        }
-        
-        System.out.println("class type checking methods test passed.");
+        assertTrue(result, "isAssignable should return true for assignable types");
     }
 }

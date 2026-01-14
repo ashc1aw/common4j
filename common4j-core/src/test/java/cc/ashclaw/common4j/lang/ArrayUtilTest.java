@@ -3,120 +3,63 @@
 
 package cc.ashclaw.common4j.lang;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
+
 /**
- * Test class for ArrayUtil result verification.
+ * Test class for ArrayUtil result verification using JUnit 5.
  * <p>
- * ArrayUtil结果验证测试类。
+ * ArrayUtil结果验证测试类，使用JUnit 5。
  *
  * @author b1itz7
  * @since 1.0.0
  */
 public class ArrayUtilTest {
 
-    public static void main(String[] args) {
-        System.out.println("===== ArrayUtil Result Verification Test Start =====");
-        
-        // Test null/empty checking methods
-        testNullEmptyChecks();
-        
-        // Test length methods
-        testLengthMethods();
-        
-        // Test element access methods
-        testElementAccessMethods();
-        
-        // Test array manipulation methods
-        testArrayManipulationMethods();
-        
-        // Test comparison methods
-        testComparisonMethods();
-        
-        System.out.println("===== ArrayUtil Result Verification Test End =====");
-    }
-
     /**
      * Test the null and empty checking methods of ArrayUtil.
      * <p>
      * 测试ArrayUtil的null和空值检查方法。
      */
-    private static void testNullEmptyChecks() {
-        System.out.println("\n1. Testing null/empty checking methods...");
-        
+    @Test
+    void testNullEmptyChecks() {
         // Test isNull
         boolean result = ArrayUtil.isNull(null);
-        System.out.println("isNull(null) = " + result);
-        if (!result) {
-            System.out.println("ERROR: isNull should return true for null!");
-            return;
-        }
+        assertTrue(result, "isNull should return true for null");
         
         result = ArrayUtil.isNull(new String[]{});
-        System.out.println("isNull(new String[]{}) = " + result);
-        if (result) {
-            System.out.println("ERROR: isNull should return false for empty array!");
-            return;
-        }
+        assertFalse(result, "isNull should return false for empty array");
         
         // Test nonNull
         result = ArrayUtil.nonNull(null);
-        System.out.println("nonNull(null) = " + result);
-        if (result) {
-            System.out.println("ERROR: nonNull should return false for null!");
-            return;
-        }
+        assertFalse(result, "nonNull should return false for null");
         
         result = ArrayUtil.nonNull(new String[]{});
-        System.out.println("nonNull(new String[]{}) = " + result);
-        if (!result) {
-            System.out.println("ERROR: nonNull should return true for non-null array!");
-            return;
-        }
+        assertTrue(result, "nonNull should return true for non-null array");
         
         // Test isEmpty
         result = ArrayUtil.isEmpty(null);
-        System.out.println("isEmpty(null) = " + result);
-        if (!result) {
-            System.out.println("ERROR: isEmpty should return true for null!");
-            return;
-        }
+        assertTrue(result, "isEmpty should return true for null");
         
         result = ArrayUtil.isEmpty(new String[]{});
-        System.out.println("isEmpty(new String[]{}) = " + result);
-        if (!result) {
-            System.out.println("ERROR: isEmpty should return true for empty array!");
-            return;
-        }
+        assertTrue(result, "isEmpty should return true for empty array");
         
         result = ArrayUtil.isEmpty(new String[]{"test"});
-        System.out.println("isEmpty(new String[]{\"test\"}) = " + result);
-        if (result) {
-            System.out.println("ERROR: isEmpty should return false for non-empty array!");
-            return;
-        }
+        assertFalse(result, "isEmpty should return false for non-empty array");
         
         // Test isNotEmpty
         result = ArrayUtil.isNotEmpty(null);
-        System.out.println("isNotEmpty(null) = " + result);
-        if (result) {
-            System.out.println("ERROR: isNotEmpty should return false for null!");
-            return;
-        }
+        assertFalse(result, "isNotEmpty should return false for null");
         
         result = ArrayUtil.isNotEmpty(new String[]{});
-        System.out.println("isNotEmpty(new String[]{}) = " + result);
-        if (result) {
-            System.out.println("ERROR: isNotEmpty should return false for empty array!");
-            return;
-        }
+        assertFalse(result, "isNotEmpty should return false for empty array");
         
         result = ArrayUtil.isNotEmpty(new String[]{"test"});
-        System.out.println("isNotEmpty(new String[]{\"test\"}) = " + result);
-        if (!result) {
-            System.out.println("ERROR: isNotEmpty should return true for non-empty array!");
-            return;
-        }
-        
-        System.out.println("null/empty checking methods test passed.");
+        assertTrue(result, "isNotEmpty should return true for non-empty array");
     }
 
     /**
@@ -124,32 +67,17 @@ public class ArrayUtilTest {
      * <p>
      * 测试ArrayUtil的长度方法。
      */
-    private static void testLengthMethods() {
-        System.out.println("\n2. Testing length methods...");
-        
+    @Test
+    void testLengthMethods() {
         // Test length
         int result = ArrayUtil.length(null);
-        System.out.println("length(null) = " + result);
-        if (result != 0) {
-            System.out.println("ERROR: length should return 0 for null!");
-            return;
-        }
+        assertEquals(0, result, "length should return 0 for null");
         
         result = ArrayUtil.length(new String[]{});
-        System.out.println("length(new String[]{}) = " + result);
-        if (result != 0) {
-            System.out.println("ERROR: length should return 0 for empty array!");
-            return;
-        }
+        assertEquals(0, result, "length should return 0 for empty array");
         
         result = ArrayUtil.length(new String[]{"a", "b", "c"});
-        System.out.println("length(new String[]{\"a\", \"b\", \"c\"}) = " + result);
-        if (result != 3) {
-            System.out.println("ERROR: length should return correct length!");
-            return;
-        }
-        
-        System.out.println("length methods test passed.");
+        assertEquals(3, result, "length should return correct length");
     }
 
     /**
@@ -157,78 +85,39 @@ public class ArrayUtilTest {
      * <p>
      * 测试ArrayUtil的元素访问方法。
      */
-    private static void testElementAccessMethods() {
-        System.out.println("\n3. Testing element access methods...");
-        
+    @Test
+    void testElementAccessMethods() {
         String[] array = {"first", "second", "third"};
         
         // Test getFirst
         String result = ArrayUtil.getFirst(null);
-        System.out.println("getFirst(null) = " + result);
-        if (result != null) {
-            System.out.println("ERROR: getFirst should return null for null!");
-            return;
-        }
+        assertNull(result, "getFirst should return null for null");
         
         result = ArrayUtil.getFirst(new String[]{});
-        System.out.println("getFirst(new String[]{}) = " + result);
-        if (result != null) {
-            System.out.println("ERROR: getFirst should return null for empty array!");
-            return;
-        }
+        assertNull(result, "getFirst should return null for empty array");
         
         result = ArrayUtil.getFirst(array);
-        System.out.println("getFirst(array) = \"" + result + "\"");
-        if (!"first".equals(result)) {
-            System.out.println("ERROR: getFirst should return first element!");
-            return;
-        }
+        assertEquals("first", result, "getFirst should return first element");
         
         // Test getLast
         result = ArrayUtil.getLast(null);
-        System.out.println("getLast(null) = " + result);
-        if (result != null) {
-            System.out.println("ERROR: getLast should return null for null!");
-            return;
-        }
+        assertNull(result, "getLast should return null for null");
         
         result = ArrayUtil.getLast(new String[]{});
-        System.out.println("getLast(new String[]{}) = " + result);
-        if (result != null) {
-            System.out.println("ERROR: getLast should return null for empty array!");
-            return;
-        }
+        assertNull(result, "getLast should return null for empty array");
         
         result = ArrayUtil.getLast(array);
-        System.out.println("getLast(array) = \"" + result + "\"");
-        if (!"third".equals(result)) {
-            System.out.println("ERROR: getLast should return last element!");
-            return;
-        }
+        assertEquals("third", result, "getLast should return last element");
         
         // Test get
         result = ArrayUtil.get(null, 0);
-        System.out.println("get(null, 0) = " + result);
-        if (result != null) {
-            System.out.println("ERROR: get should return null for null array!");
-            return;
-        }
+        assertNull(result, "get should return null for null array");
         
         result = ArrayUtil.get(array, 1);
-        System.out.println("get(array, 1) = \"" + result + "\"");
-        if (!"second".equals(result)) {
-            System.out.println("ERROR: get should return correct element!");
-            return;
-        }
+        assertEquals("second", result, "get should return correct element");
         
         result = ArrayUtil.get(array, 10);
-        System.out.println("get(array, 10) = " + result);
-        if (result != null) {
-            System.out.println("ERROR: get should return null for index out of bounds!");
-            return;
-        }
-        
-        System.out.println("element access methods test passed.");
+        assertNull(result, "get should return null for index out of bounds");
     }
 
     /**
@@ -236,44 +125,26 @@ public class ArrayUtilTest {
      * <p>
      * 测试ArrayUtil的数组操作方法。
      */
-    private static void testArrayManipulationMethods() {
-        System.out.println("\n4. Testing array manipulation methods...");
-        
+    @Test
+    void testArrayManipulationMethods() {
         // Test clone
         String[] array = {"a", "b", "c"};
         String[] cloned = ArrayUtil.clone(array);
-        System.out.println("clone(array) = " + (cloned != null ? "[cloned]" : "null"));
-        if (cloned == null) {
-            System.out.println("ERROR: clone should not return null for non-null array!");
-            return;
-        }
+        assertNotNull(cloned, "clone should not return null for non-null array");
         
         // Test concat
         String[] array1 = {"a", "b"};
         String[] array2 = {"c", "d"};
         String[] concatenated = ArrayUtil.concat(array1, array2);
-        System.out.println("concat(array1, array2) length = " + (concatenated != null ? concatenated.length : 0));
-        if (concatenated == null || concatenated.length != 4) {
-            System.out.println("ERROR: concat should combine arrays correctly!");
-            return;
-        }
+        assertNotNull(concatenated, "concat should not return null");
+        assertEquals(4, concatenated.length, "concat should combine arrays correctly");
         
         // Test contains
         boolean result = ArrayUtil.contains(array, "b");
-        System.out.println("contains(array, \"b\") = " + result);
-        if (!result) {
-            System.out.println("ERROR: contains should find existing element!");
-            return;
-        }
+        assertTrue(result, "contains should find existing element");
         
         result = ArrayUtil.contains(array, "z");
-        System.out.println("contains(array, \"z\") = " + result);
-        if (result) {
-            System.out.println("ERROR: contains should not find non-existing element!");
-            return;
-        }
-        
-        System.out.println("array manipulation methods test passed.");
+        assertFalse(result, "contains should not find non-existing element");
     }
 
     /**
@@ -281,35 +152,20 @@ public class ArrayUtilTest {
      * <p>
      * 测试ArrayUtil的比较方法。
      */
-    private static void testComparisonMethods() {
-        System.out.println("\n5. Testing comparison methods...");
-        
+    @Test
+    void testComparisonMethods() {
         // Test equals
         String[] array1 = {"a", "b", "c"};
         String[] array2 = {"a", "b", "c"};
         String[] array3 = {"x", "y", "z"};
         
         boolean result = ArrayUtil.equals(array1, array2);
-        System.out.println("equals(array1, array2) = " + result);
-        if (!result) {
-            System.out.println("ERROR: equals should return true for equal arrays!");
-            return;
-        }
+        assertTrue(result, "equals should return true for equal arrays");
         
         result = ArrayUtil.equals(array1, array3);
-        System.out.println("equals(array1, array3) = " + result);
-        if (result) {
-            System.out.println("ERROR: equals should return false for different arrays!");
-            return;
-        }
+        assertFalse(result, "equals should return false for different arrays");
         
         result = ArrayUtil.equals(null, null);
-        System.out.println("equals(null, null) = " + result);
-        if (!result) {
-            System.out.println("ERROR: equals should return true for both null!");
-            return;
-        }
-        
-        System.out.println("comparison methods test passed.");
+        assertTrue(result, "equals should return true for both null");
     }
 }

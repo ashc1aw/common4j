@@ -7,10 +7,12 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.junit.jupiter.api.Test;
+
 /**
- * Performance test class for ThreadUtil.
+ * Performance test class for ThreadUtil using JUnit 5.
  * <p>
- * ThreadUtil的性能测试类。
+ * ThreadUtil的性能测试类，使用JUnit 5。
  * <p>
  * This class provides performance tests for ThreadUtil methods, measuring
  * execution time and throughput for various operations.
@@ -36,33 +38,13 @@ public class ThreadUtilPerformanceTest {
      */
     private static final int CONCURRENT_THREADS = 100;
 
-    public static void main(String[] args) {
-        System.out.println("===== ThreadUtil Performance Test Start =====");
-        
-        // Test sleep method performance
-        testSleepPerformance();
-        
-        // Test thread creation performance
-        testThreadCreationPerformance();
-        
-        // Test thread local performance
-        testThreadLocalPerformance();
-        
-        // Test count down latch performance
-        testCountDownLatchPerformance();
-        
-        // Test concurrent operations
-        testConcurrentOperations();
-        
-        System.out.println("===== ThreadUtil Performance Test End =====");
-    }
-
     /**
      * Test the performance of sleep methods.
      * <p>
      * 测试休眠方法的性能。
      */
-    private static void testSleepPerformance() {
+    @Test
+    void testSleepPerformance() {
         System.out.println("\n1. Testing sleep methods performance...");
         
         // Test short sleep performance
@@ -93,7 +75,8 @@ public class ThreadUtilPerformanceTest {
      * <p>
      * 测试线程创建方法的性能。
      */
-    private static void testThreadCreationPerformance() {
+    @Test
+    void testThreadCreationPerformance() {
         System.out.println("\n2. Testing thread creation performance...");
         
         // Test createThread performance
@@ -131,7 +114,8 @@ public class ThreadUtilPerformanceTest {
      * <p>
      * 测试ThreadLocal操作的性能。
      */
-    private static void testThreadLocalPerformance() {
+    @Test
+    void testThreadLocalPerformance() {
         System.out.println("\n3. Testing ThreadLocal operations performance...");
         
         // Create thread local instances
@@ -179,7 +163,8 @@ public class ThreadUtilPerformanceTest {
      * <p>
      * 测试CountDownLatch操作的性能。
      */
-    private static void testCountDownLatchPerformance() {
+    @Test
+    void testCountDownLatchPerformance() {
         System.out.println("\n4. Testing CountDownLatch operations performance...");
         
         // Test count down performance
@@ -207,7 +192,8 @@ public class ThreadUtilPerformanceTest {
      * <p>
      * 测试并发操作的性能。
      */
-    private static void testConcurrentOperations() {
+    @Test
+    void testConcurrentOperations() {
         System.out.println("\n5. Testing concurrent operations performance...");
         
         // Test concurrent thread name operations

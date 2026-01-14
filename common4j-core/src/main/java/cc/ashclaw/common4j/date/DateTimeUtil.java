@@ -6,7 +6,7 @@ package cc.ashclaw.common4j.date;
 import cc.ashclaw.common4j.annotation.ThreadSafe;
 import cc.ashclaw.common4j.constant.DateFormats;
 import cc.ashclaw.common4j.constant.TimeZones;
-import cc.ashclaw.common4j.util.StringUtils;
+import cc.ashclaw.common4j.util.StringUtil;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -27,7 +27,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @since 1.0.0
  */
 @ThreadSafe
-public final class DateTimeUtils {
+public final class DateTimeUtil {
 
     private static final ConcurrentHashMap<String, DateTimeFormatter> FORMATTER_CACHE
             = new ConcurrentHashMap<>(16);
@@ -44,7 +44,7 @@ public final class DateTimeUtils {
      * <p>
      * 防止实例化。
      */
-    private DateTimeUtils() {
+    private DateTimeUtil() {
         throw new UnsupportedOperationException("DateTimeUtils cannot be instantiated");
     }
 
@@ -82,7 +82,7 @@ public final class DateTimeUtils {
      */
     public static LocalDateTime parse(String dateTimeStr, String pattern) {
         try {
-            if (StringUtils.isBlank(dateTimeStr)) {
+            if (StringUtil.isBlank(dateTimeStr)) {
                 return null;
             }
             if (dateTimeStr.contains("Z") || dateTimeStr.contains("+")) {
@@ -112,7 +112,7 @@ public final class DateTimeUtils {
      */
     public static LocalDateTime parse(String dateTimeStr) {
         try {
-            if (StringUtils.isBlank(dateTimeStr)) {
+            if (StringUtil.isBlank(dateTimeStr)) {
                 return null;
             }
             if (dateTimeStr.contains("Z") || dateTimeStr.contains("+")) {

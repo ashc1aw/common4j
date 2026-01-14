@@ -6,82 +6,50 @@ package cc.ashclaw.common4j.thread;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
+
 /**
- * Test class for ThreadUtil result verification.
+ * Test class for ThreadUtil result verification using JUnit 5.
  * <p>
- * ThreadUtil结果验证测试类。
+ * ThreadUtil结果验证测试类，使用JUnit 5。
  *
  * @author b1itz7
  * @since 1.0.0
  */
 public class ThreadUtilTest {
 
-    public static void main(String[] args) {
-        System.out.println("===== ThreadUtil Result Verification Test Start =====");
-        
-        // Test sleep methods
-        testSleepMethods();
-        
-        // Test thread creation and management
-        testThreadCreation();
-        
-        // Test thread name operations
-        testThreadNameOperations();
-        
-        // Test thread group operations
-        testThreadGroupOperations();
-        
-        // Test wait methods
-        testWaitMethods();
-        
-        // Test thread utilities
-        testThreadUtilities();
-        
-        System.out.println("===== ThreadUtil Result Verification Test End =====");
-    }
-
     /**
      * Test the sleep methods of ThreadUtil.
      * <p>
      * 测试ThreadUtil的休眠方法。
      */
-    private static void testSleepMethods() {
-        System.out.println("\n1. Testing sleep methods...");
-        
+    @Test
+    void testSleepMethods() {
         // Test sleep with milliseconds
         long startTime = System.currentTimeMillis();
         ThreadUtil.sleep(100);
         long endTime = System.currentTimeMillis();
         long elapsed = endTime - startTime;
-        System.out.println("sleep(100ms) elapsed time: " + elapsed + "ms");
-        if (elapsed < 100) {
-            System.out.println("ERROR: sleep(100ms) should sleep at least 100ms!");
-            return;
-        }
+        assertTrue(elapsed >= 100, "sleep(100ms) should sleep at least 100ms");
         
         // Test sleep with TimeUnit
         startTime = System.currentTimeMillis();
         ThreadUtil.sleep(100, TimeUnit.MILLISECONDS);
         endTime = System.currentTimeMillis();
         elapsed = endTime - startTime;
-        System.out.println("sleep(100, MILLISECONDS) elapsed time: " + elapsed + "ms");
-        if (elapsed < 100) {
-            System.out.println("ERROR: sleep(100, MILLISECONDS) should sleep at least 100ms!");
-            return;
-        }
+        assertTrue(elapsed >= 100, "sleep(100, MILLISECONDS) should sleep at least 100ms");
         
         // Test sleep with negative time (should do nothing)
         startTime = System.currentTimeMillis();
         ThreadUtil.sleep(-100);
         endTime = System.currentTimeMillis();
         elapsed = endTime - startTime;
-        System.out.println("sleep(-100ms) elapsed time: " + elapsed + "ms");
-        if (elapsed > 10) {
-            System.out.println("ERROR: sleep(-100ms) should not sleep!");
-            return;
-        }
-        
-        System.out.println("sleep methods test passed.");
+        assertTrue(elapsed <= 10, "sleep(-100ms) should not sleep");
     }
 
     /**
@@ -89,53 +57,34 @@ public class ThreadUtilTest {
      * <p>
      * 测试ThreadUtil的线程创建方法。
      */
-    private static void testThreadCreation() {
-        System.out.println("\n2. Testing thread creation methods...");
-        
+    @Test
+    void testThreadCreation() {
         // Test createThread without name
         Thread thread1 = ThreadUtil.createThread(() -> {
-            System.out.println("Thread1 is running: " + Thread.currentThread().getName());
+            // Do nothing
         });
-        System.out.println("createThread(runnable) thread name: " + thread1.getName());
-        if (!thread1.getName().startsWith("Common4j-Thread-")) {
-            System.out.println("ERROR: createThread should generate default name!");
-            return;
-        }
+        assertTrue(thread1.getName().startsWith("Common4j-Thread-"), "createThread should generate default name");
         
         // Test createThread with name
         Thread thread2 = ThreadUtil.createThread("TestThread", () -> {
-            System.out.println("Thread2 is running: " + Thread.currentThread().getName());
+            // Do nothing
         });
-        System.out.println("createThread(\"TestThread\", runnable) thread name: " + thread2.getName());
-        if (!"TestThread".equals(thread2.getName())) {
-            System.out.println("ERROR: createThread should use provided name!");
-            return;
-        }
+        assertEquals("TestThread", thread2.getName(), "createThread should use provided name");
         
         // Test startThread without name
         Thread thread3 = ThreadUtil.startThread(() -> {
-            System.out.println("Thread3 is running: " + Thread.currentThread().getName());
+            // Do nothing
         });
-        System.out.println("startThread(runnable) thread name: " + thread3.getName());
-        if (!thread3.isAlive()) {
-            System.out.println("ERROR: startThread should start the thread!");
-            return;
-        }
+        assertTrue(thread3.isAlive(), "startThread should start the thread");
         
         // Test startThread with name
         Thread thread4 = ThreadUtil.startThread("StartedTestThread", () -> {
-            System.out.println("Thread4 is running: " + Thread.currentThread().getName());
+            // Do nothing
         });
-        System.out.println("startThread(\"StartedTestThread\", runnable) thread name: " + thread4.getName());
-        if (!thread4.isAlive()) {
-            System.out.println("ERROR: startThread should start the thread!");
-            return;
-        }
+        assertTrue(thread4.isAlive(), "startThread should start the thread");
         
         // Wait for threads to complete
         ThreadUtil.waitForAll(thread1, thread2, thread3, thread4);
-        
-        System.out.println("thread creation methods test passed.");
     }
 
     /**
@@ -143,21 +92,15 @@ public class ThreadUtilTest {
      * <p>
      * 测试ThreadUtil的线程名称操作方法。
      */
-    private static void testThreadNameOperations() {
-        System.out.println("\n3. Testing thread name operations...");
-        
+    @Test
+    void testThreadNameOperations() {
         // Test getCurrentThreadName
         String originalName = ThreadUtil.getCurrentThreadName();
-        System.out.println("getCurrentThreadName() before change: " + originalName);
         
         // Test setCurrentThreadName
         ThreadUtil.setCurrentThreadName("TestCurrentThread");
         String newName = ThreadUtil.getCurrentThreadName();
-        System.out.println("getCurrentThreadName() after change: " + newName);
-        if (!"TestCurrentThread".equals(newName)) {
-            System.out.println("ERROR: setCurrentThreadName should change thread name!");
-            return;
-        }
+        assertEquals("TestCurrentThread", newName, "setCurrentThreadName should change thread name");
         
         // Restore original name
         ThreadUtil.setCurrentThreadName(originalName);
@@ -165,13 +108,7 @@ public class ThreadUtilTest {
         // Test setCurrentThreadName with null
         ThreadUtil.setCurrentThreadName(null);
         String nameAfterNull = ThreadUtil.getCurrentThreadName();
-        System.out.println("getCurrentThreadName() after null: " + nameAfterNull);
-        if (!originalName.equals(nameAfterNull)) {
-            System.out.println("ERROR: setCurrentThreadName with null should not change thread name!");
-            return;
-        }
-        
-        System.out.println("thread name operations test passed.");
+        assertEquals(originalName, nameAfterNull, "setCurrentThreadName with null should not change thread name");
     }
 
     /**
@@ -179,18 +116,11 @@ public class ThreadUtilTest {
      * <p>
      * 测试ThreadUtil的线程组操作方法。
      */
-    private static void testThreadGroupOperations() {
-        System.out.println("\n4. Testing thread group operations...");
-        
+    @Test
+    void testThreadGroupOperations() {
         // Test getCommon4jThreadGroup
         ThreadGroup group = ThreadUtil.getCommon4jThreadGroup();
-        System.out.println("getCommon4jThreadGroup() name: " + group.getName());
-        if (!"Common4j-Threads".equals(group.getName())) {
-            System.out.println("ERROR: getCommon4jThreadGroup should return correct thread group!");
-            return;
-        }
-        
-        System.out.println("thread group operations test passed.");
+        assertEquals("Common4j-Threads", group.getName(), "getCommon4jThreadGroup should return correct thread group");
     }
 
     /**
@@ -198,9 +128,8 @@ public class ThreadUtilTest {
      * <p>
      * 测试ThreadUtil的等待方法。
      */
-    private static void testWaitMethods() {
-        System.out.println("\n5. Testing wait methods...");
-        
+    @Test
+    void testWaitMethods() {
         // Test waitForAll
         final CountDownLatch latch = new CountDownLatch(2);
         
@@ -209,7 +138,7 @@ public class ThreadUtilTest {
                 Thread.sleep(200);
                 latch.countDown();
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Thread.currentThread().interrupt();
             }
         });
         
@@ -218,7 +147,7 @@ public class ThreadUtilTest {
                 Thread.sleep(100);
                 latch.countDown();
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Thread.currentThread().interrupt();
             }
         });
         
@@ -227,13 +156,7 @@ public class ThreadUtilTest {
         long endTime = System.currentTimeMillis();
         long elapsed = endTime - startTime;
         
-        System.out.println("waitForAll() elapsed time: " + elapsed + "ms");
-        if (elapsed < 200) {
-            System.out.println("ERROR: waitForAll should wait for all threads to complete!");
-            return;
-        }
-        
-        System.out.println("wait methods test passed.");
+        assertTrue(elapsed >= 200, "waitForAll should wait for all threads to complete");
     }
 
     /**
@@ -241,62 +164,41 @@ public class ThreadUtilTest {
      * <p>
      * 测试ThreadUtil的线程工具方法。
      */
-    private static void testThreadUtilities() {
-        System.out.println("\n6. Testing thread utilities...");
-        
+    @Test
+    void testThreadUtilities() {
         // Test newCountDownLatch
         CountDownLatch latch1 = ThreadUtil.newCountDownLatch(3);
-        System.out.println("newCountDownLatch(3) count: " + latch1.getCount());
-        if (latch1.getCount() != 3) {
-            System.out.println("ERROR: newCountDownLatch(3) should create latch with count 3!");
-            return;
-        }
+        assertEquals(3, latch1.getCount(), "newCountDownLatch(3) should create latch with count 3");
         
         // Test newCountDownLatch with negative count
         CountDownLatch latch2 = ThreadUtil.newCountDownLatch(-1);
-        System.out.println("newCountDownLatch(-1) count: " + latch2.getCount());
-        if (latch2.getCount() != 1) {
-            System.out.println("ERROR: newCountDownLatch with negative count should create latch with count 1!");
-            return;
-        }
+        assertEquals(1, latch2.getCount(), "newCountDownLatch with negative count should create latch with count 1");
         
         // Test newThreadLocal
         ThreadLocal<String> threadLocal = ThreadUtil.newThreadLocal();
-        if (threadLocal == null) {
-            System.out.println("ERROR: newThreadLocal should create a new ThreadLocal!");
-            return;
-        }
+        assertNotNull(threadLocal, "newThreadLocal should create a new ThreadLocal");
         
         // Test newThreadLocal with initial value
         ThreadLocal<Integer> threadLocalWithInitial = ThreadUtil.newThreadLocal(() -> 42);
-        if (threadLocalWithInitial == null) {
-            System.out.println("ERROR: newThreadLocal with supplier should create a new ThreadLocal!");
-            return;
-        }
-        System.out.println("newThreadLocal with supplier initial value: " + threadLocalWithInitial.get());
-        if (threadLocalWithInitial.get() != 42) {
-            System.out.println("ERROR: newThreadLocal with supplier should set initial value!");
-            return;
-        }
+        assertNotNull(threadLocalWithInitial, "newThreadLocal with supplier should create a new ThreadLocal");
+        assertEquals(42, threadLocalWithInitial.get(), "newThreadLocal with supplier should set initial value");
         
         // Test removeThreadLocal
         threadLocalWithInitial.set(100);
-        System.out.println("threadLocal value before remove: " + threadLocalWithInitial.get());
+        assertEquals(100, threadLocalWithInitial.get(), "threadLocal should have value 100 before remove");
         ThreadUtil.removeThreadLocal(threadLocalWithInitial);
-        System.out.println("threadLocal value after remove: " + threadLocalWithInitial.get());
+        assertNull(threadLocalWithInitial.get(), "threadLocal should be null after remove");
         
         // Test interrupt methods
         Thread testThread = ThreadUtil.createThread(() -> {
             while (!ThreadUtil.isInterrupted()) {
                 ThreadUtil.sleep(10);
             }
-            System.out.println("Thread was interrupted as expected");
         });
         testThread.start();
         ThreadUtil.sleep(50);
         ThreadUtil.interrupt(testThread);
         ThreadUtil.waitForAll(testThread);
-        
-        System.out.println("thread utilities test passed.");
+        assertFalse(testThread.isAlive(), "interrupted thread should be terminated");
     }
 }

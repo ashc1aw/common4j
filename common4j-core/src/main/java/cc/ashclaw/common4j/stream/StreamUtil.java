@@ -20,7 +20,15 @@ import java.util.stream.*;
  * @author b1itz7
  * @since 1.0.0
  */
-public class StreamUtil {
+public final class StreamUtil {
+    /**
+     * Private constructor to prevent instantiation.
+     * <p>
+     * 私有构造函数，防止实例化。
+     */
+    private StreamUtil() {
+        throw new UnsupportedOperationException("StreamUtil cannot be instantiated.");
+    }
 
     /**
      * Creates a stream from a nullable collection.

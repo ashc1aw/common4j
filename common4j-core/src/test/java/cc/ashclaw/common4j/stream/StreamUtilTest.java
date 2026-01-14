@@ -3,117 +3,69 @@
 
 package cc.ashclaw.common4j.stream;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
 
 /**
- * Test class for StreamUtil result verification.
+ * Test class for StreamUtil result verification using JUnit 5.
  * <p>
- * StreamUtil结果验证测试类。
+ * StreamUtil结果验证测试类，使用JUnit 5。
  *
  * @author b1itz7
  * @since 1.0.0
  */
 public class StreamUtilTest {
 
-    public static void main(String[] args) {
-        System.out.println("===== StreamUtil Result Verification Test Start =====");
-        
-        // Test stream creation methods
-        testStreamCreationMethods();
-        
-        // Test collection methods
-        testCollectionMethods();
-        
-        // Test filter methods
-        testFilterMethods();
-        
-        // Test map methods
-        testMapMethods();
-        
-        // Test joining methods
-        testJoiningMethods();
-        
-        // Test from iterator/iterable methods
-        testFromIteratorIterableMethods();
-        
-        System.out.println("===== StreamUtil Result Verification Test End =====");
-    }
-
     /**
      * Test the stream creation methods of StreamUtil.
      * <p>
      * 测试StreamUtil的流创建方法。
      */
-    private static void testStreamCreationMethods() {
-        System.out.println("\n1. Testing stream creation methods...");
-        
+    @Test
+    void testStreamCreationMethods() {
         // Test ofNullable(Collection)
-        System.out.println("Testing ofNullable(Collection)...");
         List<String> list = null;
         Stream<String> stream = StreamUtil.ofNullable(list);
         long count = stream.count();
-        System.out.println("ofNullable(null Collection) count = " + count);
-        if (count != 0) {
-            System.out.println("ERROR: ofNullable should return empty stream for null collection!\n");
-            return;
-        }
+        assertEquals(0, count, "ofNullable should return empty stream for null collection");
         
         list = Collections.emptyList();
         stream = StreamUtil.ofNullable(list);
         count = stream.count();
-        System.out.println("ofNullable(empty Collection) count = " + count);
-        if (count != 0) {
-            System.out.println("ERROR: ofNullable should return empty stream for empty collection!\n");
-            return;
-        }
+        assertEquals(0, count, "ofNullable should return empty stream for empty collection");
         
         list = Arrays.asList("a", "b", "c");
         stream = StreamUtil.ofNullable(list);
         count = stream.count();
-        System.out.println("ofNullable(non-empty Collection) count = " + count);
-        if (count != 3) {
-            System.out.println("ERROR: ofNullable should return stream with correct elements!\n");
-            return;
-        }
+        assertEquals(3, count, "ofNullable should return stream with correct elements");
         
         // Test parallelOfNullable(Collection)
-        System.out.println("Testing parallelOfNullable(Collection)...");
         list = Arrays.asList("a", "b", "c");
         stream = StreamUtil.parallelOfNullable(list);
-        System.out.println("parallelOfNullable(Collection) is parallel = " + stream.isParallel());
-        if (!stream.isParallel()) {
-            System.out.println("ERROR: parallelOfNullable should return parallel stream!\n");
-            return;
-        }
+        assertTrue(stream.isParallel(), "parallelOfNullable should return parallel stream");
         
         // Test ofNullable(T...)
-        System.out.println("Testing ofNullable(T...)...");
         stream = StreamUtil.ofNullable((String[]) null);
         count = stream.count();
-        System.out.println("ofNullable(null Array) count = " + count);
-        if (count != 0) {
-            System.out.println("ERROR: ofNullable should return empty stream for null array!\n");
-            return;
-        }
+        assertEquals(0, count, "ofNullable should return empty stream for null array");
         
         stream = StreamUtil.ofNullable(new String[]{});
         count = stream.count();
-        System.out.println("ofNullable(empty Array) count = " + count);
-        if (count != 0) {
-            System.out.println("ERROR: ofNullable should return empty stream for empty array!\n");
-            return;
-        }
+        assertEquals(0, count, "ofNullable should return empty stream for empty array");
         
         stream = StreamUtil.ofNullable("a", "b", "c");
         count = stream.count();
-        System.out.println("ofNullable(non-empty Array) count = " + count);
-        if (count != 3) {
-            System.out.println("ERROR: ofNullable should return stream with correct elements!\n");
-            return;
-        }
-        
-        System.out.println("stream creation methods test passed.");
+        assertEquals(3, count, "ofNullable should return stream with correct elements");
     }
 
     /**
@@ -121,76 +73,42 @@ public class StreamUtilTest {
      * <p>
      * 测试StreamUtil的收集方法。
      */
-    private static void testCollectionMethods() {
-        System.out.println("\n2. Testing collection methods...");
-        
+    @Test
+    void testCollectionMethods() {
         // Test toList
-        System.out.println("Testing toList...");
         List<String> result = StreamUtil.toList(null);
-        System.out.println("toList(null Stream) is empty = " + result.isEmpty());
-        if (!result.isEmpty()) {
-            System.out.println("ERROR: toList should return empty list for null stream!\n");
-            return;
-        }
+        assertTrue(result.isEmpty(), "toList should return empty list for null stream");
         
         result = StreamUtil.toList(Stream.of("a", "b", "c"));
-        System.out.println("toList(non-empty Stream) size = " + result.size());
-        if (result.size() != 3) {
-            System.out.println("ERROR: toList should return list with correct elements!\n");
-            return;
-        }
+        assertEquals(3, result.size(), "toList should return list with correct elements");
         
         // Test toSet
-        System.out.println("Testing toSet...");
         Set<String> setResult = StreamUtil.toSet(null);
-        System.out.println("toSet(null Stream) is empty = " + setResult.isEmpty());
-        if (!setResult.isEmpty()) {
-            System.out.println("ERROR: toSet should return empty set for null stream!\n");
-            return;
-        }
+        assertTrue(setResult.isEmpty(), "toSet should return empty set for null stream");
         
         setResult = StreamUtil.toSet(Stream.of("a", "b", "a"));
-        System.out.println("toSet(non-empty Stream) size = " + setResult.size());
-        if (setResult.size() != 2) {
-            System.out.println("ERROR: toSet should return set with unique elements!\n");
-            return;
-        }
+        assertEquals(2, setResult.size(), "toSet should return set with unique elements");
         
-        // Test toMap
-        System.out.println("Testing toMap...");
+        // Test toMap (with keyMapper and valueMapper)
         Map<String, Integer> mapResult = StreamUtil.toMap(null, (String s) -> s, (String s) -> s.length());
-        System.out.println("toMap(null Stream) is empty = " + mapResult.isEmpty());
-        if (!mapResult.isEmpty()) {
-            System.out.println("ERROR: toMap should return empty map for null stream!\n");
-            return;
-        }
+        assertTrue(mapResult.isEmpty(), "toMap should return empty map for null stream");
         
         mapResult = StreamUtil.toMap(Stream.of("a", "bb", "ccc"), (String s) -> s, (String s) -> s.length());
-        System.out.println("toMap(non-empty Stream) size = " + mapResult.size());
-        if (mapResult.size() != 3 || mapResult.get("bb") != 2) {
-            System.out.println("ERROR: toMap should return map with correct key-value pairs!\n");
-            return;
-        }
+        assertEquals(3, mapResult.size(), "toMap should return map with correct size");
+        assertEquals(2, mapResult.get("bb"), "toMap should return map with correct key-value pairs");
+        
+        // Test toMap (with merge function)
+        mapResult = StreamUtil.toMap(Stream.of("a", "bb", "a"), (String s) -> s, (String s) -> s.length(), Integer::max);
+        assertEquals(2, mapResult.size(), "toMap with merge function should handle duplicate keys");
+        assertEquals(1, mapResult.get("a"), "toMap with merge function should use merge function for duplicate keys");
         
         // Test toListWithoutNull
-        System.out.println("Testing toListWithoutNull...");
         result = StreamUtil.toListWithoutNull(Stream.of("a", null, "b", null, "c"));
-        System.out.println("toListWithoutNull(stream with nulls) size = " + result.size());
-        if (result.size() != 3) {
-            System.out.println("ERROR: toListWithoutNull should return list without nulls!\n");
-            return;
-        }
+        assertEquals(3, result.size(), "toListWithoutNull should return list without nulls");
         
         // Test toSetWithoutNull
-        System.out.println("Testing toSetWithoutNull...");
         setResult = StreamUtil.toSetWithoutNull(Stream.of("a", null, "b", null, "a"));
-        System.out.println("toSetWithoutNull(stream with nulls) size = " + setResult.size());
-        if (setResult.size() != 2) {
-            System.out.println("ERROR: toSetWithoutNull should return set without nulls and duplicates!\n");
-            return;
-        }
-        
-        System.out.println("collection methods test passed.");
+        assertEquals(2, setResult.size(), "toSetWithoutNull should return set without nulls and duplicates");
     }
 
     /**
@@ -198,28 +116,16 @@ public class StreamUtilTest {
      * <p>
      * 测试StreamUtil的过滤方法。
      */
-    private static void testFilterMethods() {
-        System.out.println("\n3. Testing filter methods...");
-        
+    @Test
+    void testFilterMethods() {
         // Test filterNotNull
-        System.out.println("Testing filterNotNull...");
         Stream<String> stream = StreamUtil.filterNotNull(null);
         long count = stream.count();
-        System.out.println("filterNotNull(null Stream) count = " + count);
-        if (count != 0) {
-            System.out.println("ERROR: filterNotNull should return empty stream for null input!\n");
-            return;
-        }
+        assertEquals(0, count, "filterNotNull should return empty stream for null input");
         
         stream = StreamUtil.filterNotNull(Stream.of("a", null, "b", null, "c"));
         count = stream.count();
-        System.out.println("filterNotNull(stream with nulls) count = " + count);
-        if (count != 3) {
-            System.out.println("ERROR: filterNotNull should filter out null elements!\n");
-            return;
-        }
-        
-        System.out.println("filter methods test passed.");
+        assertEquals(3, count, "filterNotNull should filter out null elements");
     }
 
     /**
@@ -227,46 +133,70 @@ public class StreamUtilTest {
      * <p>
      * 测试StreamUtil的映射方法。
      */
-    private static void testMapMethods() {
-        System.out.println("\n4. Testing map methods...");
-        
+    @Test
+    void testMapMethods() {
         // Test mapNullable
-        System.out.println("Testing mapNullable...");
-        Stream<Integer> stream = StreamUtil.mapNullable(null, String::length);
-        long count = stream.count();
-        System.out.println("mapNullable(null Stream) count = " + count);
-        if (count != 0) {
-            System.out.println("ERROR: mapNullable should return empty stream for null input!\n");
-            return;
-        }
+        Stream<Integer> mapStream1 = StreamUtil.mapNullable(null, String::length);
+        long count = mapStream1.count();
+        assertEquals(0, count, "mapNullable should return empty stream for null input");
         
-        stream = StreamUtil.mapNullable(Stream.of("a", "bb", "ccc"), String::length);
-        List<Integer> result = stream.collect(Collectors.toList());
-        System.out.println("mapNullable(non-empty Stream) result = " + result);
-        if (result.size() != 3 || result.get(0) != 1 || result.get(1) != 2 || result.get(2) != 3) {
-            System.out.println("ERROR: mapNullable should apply mapping function correctly!\n");
-            return;
-        }
+        Stream<Integer> mapStream2 = StreamUtil.mapNullable(Stream.of("a", "bb", "ccc"), String::length);
+        List<Integer> result = mapStream2.collect(Collectors.toList());
+        assertEquals(3, result.size(), "mapNullable should return stream with mapped elements");
+        assertEquals(2, result.get(1), "mapNullable should correctly map elements");
         
         // Test flatMapNullable
-        System.out.println("Testing flatMapNullable...");
-        Stream<String> flatMapStream = StreamUtil.flatMapNullable(null, (String s) -> Stream.of(s.split("")));
-        count = flatMapStream.count();
-        System.out.println("flatMapNullable(null Stream) count = " + count);
-        if (count != 0) {
-            System.out.println("ERROR: flatMapNullable should return empty stream for null input!\n");
-            return;
-        }
+        Stream<String> flatMapStream1 = StreamUtil.flatMapNullable(null, (String s) -> Stream.of(s.split("")));
+        count = flatMapStream1.count();
+        assertEquals(0, count, "flatMapNullable should return empty stream for null input");
         
-        Stream<String> stringStream = StreamUtil.flatMapNullable(Stream.of("ab", "cd"), (String s) -> Stream.of(s.split("")));
-        List<String> flatResult = stringStream.collect(Collectors.toList());
-        System.out.println("flatMapNullable(non-empty Stream) result = " + flatResult);
-        if (flatResult.size() != 4 || !flatResult.contains("a") || !flatResult.contains("b") || !flatResult.contains("c") || !flatResult.contains("d")) {
-            System.out.println("ERROR: flatMapNullable should apply flat mapping function correctly!\n");
-            return;
-        }
+        Stream<String> flatMapStream2 = StreamUtil.flatMapNullable(Stream.of("ab", "cd"), s -> Stream.of(s.split("")));
+        List<String> stringResult = flatMapStream2.collect(Collectors.toList());
+        assertEquals(4, stringResult.size(), "flatMapNullable should return stream with flattened elements");
+        assertEquals("a", stringResult.get(0), "flatMapNullable should return correct flattened elements");
+        assertEquals("b", stringResult.get(1), "flatMapNullable should return correct flattened elements");
+        assertEquals("c", stringResult.get(2), "flatMapNullable should return correct flattened elements");
+        assertEquals("d", stringResult.get(3), "flatMapNullable should return correct flattened elements");
+    }
+
+    /**
+     * Test the iterator and iterable methods of StreamUtil.
+     * <p>
+     * 测试StreamUtil的迭代器和可迭代对象方法。
+     */
+    @Test
+    void testIteratorIterableMethods() {
+        // Test fromIterator
+        Iterator<String> iterator = null;
+        Stream<String> stream = StreamUtil.fromIterator(iterator);
+        long count = stream.count();
+        assertEquals(0, count, "fromIterator should return empty stream for null iterator");
         
-        System.out.println("map methods test passed.");
+        iterator = Arrays.asList("a", "b", "c").iterator();
+        stream = StreamUtil.fromIterator(iterator);
+        count = stream.count();
+        assertEquals(3, count, "fromIterator should return stream with elements from iterator");
+        
+        // Test fromIteratorParallel
+        iterator = Arrays.asList("a", "b", "c").iterator();
+        stream = StreamUtil.fromIteratorParallel(iterator);
+        assertTrue(stream.isParallel(), "fromIteratorParallel should return parallel stream");
+        
+        // Test fromIterable
+        Iterable<String> iterable = null;
+        stream = StreamUtil.fromIterable(iterable);
+        count = stream.count();
+        assertEquals(0, count, "fromIterable should return empty stream for null iterable");
+        
+        iterable = Arrays.asList("a", "b", "c");
+        stream = StreamUtil.fromIterable(iterable);
+        count = stream.count();
+        assertEquals(3, count, "fromIterable should return stream with elements from iterable");
+        
+        // Test fromIterableParallel
+        iterable = Arrays.asList("a", "b", "c");
+        stream = StreamUtil.fromIterableParallel(iterable);
+        assertTrue(stream.isParallel(), "fromIterableParallel should return parallel stream");
     }
 
     /**
@@ -274,114 +204,20 @@ public class StreamUtilTest {
      * <p>
      * 测试StreamUtil的连接方法。
      */
-    private static void testJoiningMethods() {
-        System.out.println("\n5. Testing joining methods...");
+    @Test
+    void testJoiningMethods() {
+        // Test join with delimiter
+        Stream<String> stream = null;
+        String result = StreamUtil.join(stream, ",");
+        assertEquals("", result, "join should return empty string for null stream");
         
-        // Test join(Stream, CharSequence)
-        System.out.println("Testing join(Stream, CharSequence)...");
-        String result = StreamUtil.join(null, ",");
-        System.out.println("join(null Stream, \",\") = \"" + result + "\"");
-        if (!result.isEmpty()) {
-            System.out.println("ERROR: join should return empty string for null stream!\n");
-            return;
-        }
+        stream = Stream.of("a", "b", "c");
+        result = StreamUtil.join(stream, ",");
+        assertEquals("a,b,c", result, "join should return correctly joined string with delimiter");
         
-        result = StreamUtil.join(Stream.empty(), ",");
-        System.out.println("join(empty Stream, \",\") = \"" + result + "\"");
-        if (!result.isEmpty()) {
-            System.out.println("ERROR: join should return empty string for empty stream!\n");
-            return;
-        }
-        
-        result = StreamUtil.join(Stream.of("a", "b", "c"), ",");
-        System.out.println("join(non-empty Stream, \",\") = \"" + result + "\"");
-        if (!"a,b,c".equals(result)) {
-            System.out.println("ERROR: join should join elements with delimiter!\n");
-            return;
-        }
-        
-        // Test join(Stream, CharSequence, CharSequence, CharSequence)
-        System.out.println("Testing join(Stream, CharSequence, CharSequence, CharSequence)...");
-        result = StreamUtil.join(null, ",", "[", "]");
-        System.out.println("join(null Stream, \",\", \"[\", \"]\") = \"" + result + "\"");
-        if (!result.isEmpty()) {
-            System.out.println("ERROR: join should return empty string for null stream!\n");
-            return;
-        }
-        
-        result = StreamUtil.join(Stream.of("a", "b", "c"), ",", "[", "]");
-        System.out.println("join(non-empty Stream, \",\", \"[\", \"]\") = \"" + result + "\"");
-        if (!"[a,b,c]".equals(result)) {
-            System.out.println("ERROR: join should join elements with delimiter, prefix and suffix!\n");
-            return;
-        }
-        
-        System.out.println("joining methods test passed.");
-    }
-
-    /**
-     * Test the from iterator/iterable methods of StreamUtil.
-     * <p>
-     * 测试StreamUtil的从迭代器/可迭代对象创建流的方法。
-     */
-    private static void testFromIteratorIterableMethods() {
-        System.out.println("\n6. Testing from iterator/iterable methods...");
-        
-        // Test fromIterator
-        System.out.println("Testing fromIterator...");
-        Stream<String> stream = StreamUtil.fromIterator(null);
-        long count = stream.count();
-        System.out.println("fromIterator(null) count = " + count);
-        if (count != 0) {
-            System.out.println("ERROR: fromIterator should return empty stream for null iterator!\n");
-            return;
-        }
-        
-        List<String> list = Arrays.asList("a", "b", "c");
-        stream = StreamUtil.fromIterator(list.iterator());
-        count = stream.count();
-        System.out.println("fromIterator(non-empty iterator) count = " + count);
-        if (count != 3) {
-            System.out.println("ERROR: fromIterator should return stream with correct elements!\n");
-            return;
-        }
-        
-        // Test fromIteratorParallel
-        System.out.println("Testing fromIteratorParallel...");
-        stream = StreamUtil.fromIteratorParallel(list.iterator());
-        System.out.println("fromIteratorParallel is parallel = " + stream.isParallel());
-        if (!stream.isParallel()) {
-            System.out.println("ERROR: fromIteratorParallel should return parallel stream!\n");
-            return;
-        }
-        
-        // Test fromIterable
-        System.out.println("Testing fromIterable...");
-        stream = StreamUtil.fromIterable(null);
-        count = stream.count();
-        System.out.println("fromIterable(null) count = " + count);
-        if (count != 0) {
-            System.out.println("ERROR: fromIterable should return empty stream for null iterable!\n");
-            return;
-        }
-        
-        stream = StreamUtil.fromIterable(list);
-        count = stream.count();
-        System.out.println("fromIterable(non-empty iterable) count = " + count);
-        if (count != 3) {
-            System.out.println("ERROR: fromIterable should return stream with correct elements!\n");
-            return;
-        }
-        
-        // Test fromIterableParallel
-        System.out.println("Testing fromIterableParallel...");
-        stream = StreamUtil.fromIterableParallel(list);
-        System.out.println("fromIterableParallel is parallel = " + stream.isParallel());
-        if (!stream.isParallel()) {
-            System.out.println("ERROR: fromIterableParallel should return parallel stream!\n");
-            return;
-        }
-        
-        System.out.println("from iterator/iterable methods test passed.");
+        // Test join with delimiter, prefix, and suffix
+        stream = Stream.of("a", "b", "c");
+        result = StreamUtil.join(stream, ",", "[", "]");
+        assertEquals("[a,b,c]", result, "join should return correctly joined string with delimiter, prefix, and suffix");
     }
 }

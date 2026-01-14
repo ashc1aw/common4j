@@ -247,7 +247,7 @@ public final class ThreadUtil {
      *               要等待的线程
      */
     public static void waitForAll(Thread... threads) {
-        if (threads == null || threads.length == 0) {
+        if (threads == null) {
             return;
         }
         for (Thread thread : threads) {

@@ -8,34 +8,25 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import org.junit.jupiter.api.Test;
+
 /**
- * Performance test class for IdUtil.
+ * Performance test class for IdUtil using JUnit 5.
  * <p>
- * IdUtil性能测试类。
+ * IdUtil性能测试类，使用JUnit 5。
  *
  * @author b1itz7
  * @since 1.0.0
  */
 public class IdUtilPerformanceTest {
 
-    public static void main(String[] args) {
-        System.out.println("===== IdUtil Performance Test Start =====");
-        
-        // Single thread performance
-        testSingleThreadPerformance();
-        
-        // Multi-thread performance
-        testMultiThreadPerformance();
-        
-        System.out.println("===== IdUtil Performance Test End =====");
-    }
-
     /**
      * Test single thread performance.
      * <p>
      * 测试单线程性能。
      */
-    private static void testSingleThreadPerformance() {
+    @Test
+    void testSingleThreadPerformance() {
         System.out.println("\n1. Testing single thread performance...");
         
         int idCount = 100000;
@@ -61,7 +52,8 @@ public class IdUtilPerformanceTest {
      * <p>
      * 测试多线程性能。
      */
-    private static void testMultiThreadPerformance() {
+    @Test
+    void testMultiThreadPerformance() throws InterruptedException {
         System.out.println("\n2. Testing multi-thread performance...");
         
         int threadCount = 10;
@@ -88,14 +80,12 @@ public class IdUtilPerformanceTest {
         }
         
         // Wait for all threads to finish
-        try {
-            latch.await(60, TimeUnit.SECONDS);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            System.out.println("Multi-thread performance test interrupted: " + e.getMessage());
+        boolean completed = latch.await(60, TimeUnit.SECONDS);
+        executorService.shutdown();
+        
+        if (!completed) {
+            System.out.println("Multi-thread performance test timed out after 60 seconds");
             return;
-        } finally {
-            executorService.shutdown();
         }
         
         long endTime = System.currentTimeMillis();

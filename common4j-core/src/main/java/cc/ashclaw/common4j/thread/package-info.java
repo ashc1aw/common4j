@@ -9,4 +9,3 @@
  *
  * @since 1.0.0
  */
-package cc.ashclaw.common4j.thread;

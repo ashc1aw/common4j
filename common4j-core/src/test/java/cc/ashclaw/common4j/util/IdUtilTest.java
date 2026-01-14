@@ -10,61 +10,39 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
+
 /**
- * Test class for IdUtil result verification.
+ * Test class for IdUtil result verification using JUnit 5.
  * <p>
- * IdUtil结果验证测试类。
+ * IdUtil结果验证测试类，使用JUnit 5。
  *
  * @author b1itz7
  * @since 1.0.0
  */
 public class IdUtilTest {
 
-    public static void main(String[] args) {
-        System.out.println("===== IdUtil Result Verification Test Start =====");
-        
-        // Test basic functionality
-        testBasicFunctionality();
-        
-        // Test different machine IDs
-        testDifferentMachineIds();
-        
-        // Test thread safety
-        testThreadSafety();
-        
-        System.out.println("===== IdUtil Result Verification Test End =====");
-    }
-
     /**
      * Test basic functionality of IdUtil.
      * <p>
      * 测试IdUtil的基本功能。
      */
-    private static void testBasicFunctionality() {
-        System.out.println("\n1. Testing basic functionality...");
-        
+    @Test
+    void testBasicFunctionality() {
         IdUtil idUtil = IdUtil.getInstance();
         
         // Generate 10 IDs
         for (int i = 0; i < 10; i++) {
             long id = idUtil.nextId();
-            // Verify ID is positive
-            if (id <= 0) {
-                System.out.println("ERROR: Generated negative ID: " + id);
-                return;
-            }
-            System.out.println("Generated ID " + (i + 1) + ": " + id);
+            assertTrue(id > 0, "Generated ID should be positive: " + id);
         }
         
         // Test generateId method
         long id = IdUtil.generateId();
-        if (id <= 0) {
-            System.out.println("ERROR: Generated negative ID via generateId(): " + id);
-            return;
-        }
-        System.out.println("Generated ID via generateId(): " + id);
-        
-        System.out.println("Basic functionality test passed.");
+        assertTrue(id > 0, "Generated ID via generateId() should be positive: " + id);
     }
 
     /**
@@ -72,9 +50,8 @@ public class IdUtilTest {
      * <p>
      * 测试不同的机器ID。
      */
-    private static void testDifferentMachineIds() {
-        System.out.println("\n2. Testing different machine IDs...");
-        
+    @Test
+    void testDifferentMachineIds() {
         // Get instances with different machine IDs
         IdUtil idUtil1 = IdUtil.getInstance(1);
         IdUtil idUtil2 = IdUtil.getInstance(2);
@@ -86,24 +63,14 @@ public class IdUtilTest {
         long id3 = idUtil3.nextId();
         
         // Verify all IDs are positive
-        if (id1 <= 0 || id2 <= 0 || id3 <= 0) {
-            System.out.println("ERROR: Generated negative ID with machine ID:");
-            System.out.println("Machine ID 1: " + id1);
-            System.out.println("Machine ID 2: " + id2);
-            System.out.println("Machine ID 3: " + id3);
-            return;
-        }
-        
-        System.out.println("Machine ID 1 generated: " + id1);
-        System.out.println("Machine ID 2 generated: " + id2);
-        System.out.println("Machine ID 3 generated: " + id3);
+        assertTrue(id1 > 0, "Generated ID with machine ID 1 should be positive: " + id1);
+        assertTrue(id2 > 0, "Generated ID with machine ID 2 should be positive: " + id2);
+        assertTrue(id3 > 0, "Generated ID with machine ID 3 should be positive: " + id3);
         
         // Verify they are different
-        if (id1 != id2 && id1 != id3 && id2 != id3) {
-            System.out.println("Different machine IDs test passed.");
-        } else {
-            System.out.println("Different machine IDs test failed!");
-        }
+        assertNotEquals(id1, id2, "IDs from different machine IDs should be different");
+        assertNotEquals(id1, id3, "IDs from different machine IDs should be different");
+        assertNotEquals(id2, id3, "IDs from different machine IDs should be different");
     }
 
     /**
@@ -111,9 +78,8 @@ public class IdUtilTest {
      * <p>
      * 测试线程安全性。
      */
-    private static void testThreadSafety() {
-        System.out.println("\n3. Testing thread safety...");
-        
+    @Test
+    void testThreadSafety() throws InterruptedException {
         int threadCount = 10;
         int idsPerThread = 1000;
         Set<Long> generatedIds = new HashSet<>();
@@ -130,10 +96,7 @@ public class IdUtilTest {
                     for (int j = 0; j < idsPerThread; j++) {
                         long id = idUtil.nextId();
                         // Verify ID is positive
-                        if (id <= 0) {
-                            System.err.println("ERROR: Generated negative ID in thread: " + id);
-                            return;
-                        }
+                        assertTrue(id > 0, "Generated ID in thread should be positive: " + id);
                         synchronized (generatedIds) {
                             generatedIds.add(id);
                         }
@@ -145,29 +108,15 @@ public class IdUtilTest {
         }
         
         // Wait for all threads to finish
-        try {
-            latch.await(30, TimeUnit.SECONDS);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            System.out.println("Thread safety test interrupted: " + e.getMessage());
-            return;
-        } finally {
-            executorService.shutdown();
-        }
+        boolean completed = latch.await(30, TimeUnit.SECONDS);
+        executorService.shutdown();
+        
+        assertTrue(completed, "Thread safety test should complete within 30 seconds");
         
         // Verify all IDs are unique
         int expectedSize = threadCount * idsPerThread;
         int actualSize = generatedIds.size();
         
-        System.out.println("Expected unique IDs: " + expectedSize);
-        System.out.println("Actual unique IDs: " + actualSize);
-        
-        if (actualSize == expectedSize) {
-            System.out.println("Thread safety test passed.");
-        } else {
-            System.out.println("Thread safety test failed! Duplicate IDs found: " + (expectedSize - actualSize));
-        }
+        assertEquals(expectedSize, actualSize, "All generated IDs should be unique. Expected: " + expectedSize + ", Actual: " + actualSize);
     }
-
-
 }

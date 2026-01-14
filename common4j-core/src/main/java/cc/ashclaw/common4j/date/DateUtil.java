@@ -4,7 +4,7 @@
 package cc.ashclaw.common4j.date;
 
 import cc.ashclaw.common4j.constant.DateFormats;
-import cc.ashclaw.common4j.util.StringUtils;
+import cc.ashclaw.common4j.util.StringUtil;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -24,7 +24,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author b1itz7
  * @since 1.0.0
  */
-public final class DateUtils {
+public final class DateUtil {
 
     private static final ConcurrentHashMap<String, DateTimeFormatter> FORMATTER_CACHE =
             new ConcurrentHashMap<>(16);
@@ -41,7 +41,7 @@ public final class DateUtils {
      * <p>
      * 防止实例化。
      */
-    private DateUtils() {
+    private DateUtil() {
         throw new UnsupportedOperationException("DateUtils cannot be instantiated");
     }
 
@@ -79,7 +79,7 @@ public final class DateUtils {
      */
     public static LocalDate parse(String dateStr, String pattern) {
         try {
-            if (StringUtils.isBlank(dateStr)) {
+            if (StringUtil.isBlank(dateStr)) {
                 return null;
             }
 
@@ -105,7 +105,7 @@ public final class DateUtils {
      */
     public static LocalDate parse(String dateStr) {
         try {
-            if (StringUtils.isBlank(dateStr)) {
+            if (StringUtil.isBlank(dateStr)) {
                 return null;
             }
 

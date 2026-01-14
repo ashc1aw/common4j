@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>common4j-core</artifactId>
+    <version>1.0.0</version>
     <name>common4j-core</name>
     <description>AshClaw Common4J Core Library</description>
     <url>https://github.com/ashclaw/common4j</url>

@@ -3,11 +3,11 @@
 
 package cc.ashclaw.common4j.util;
 
-import cc.ashclaw.common4j.date.TimeUtils;
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
+
+import cc.ashclaw.common4j.date.TimeUtil;
 
 /**
  * Utility class for generating distributed unique IDs using Snowflake algorithm.
@@ -96,7 +96,7 @@ public final class IdUtil {
      * <p>
      * 机器ID
      */
-    private final long machineId;
+    private final long machineId; // 机器ID（仅用于构造时校验，不直接参与运算）
 
     /**
      * Machine ID shifted left by sequence bits
@@ -315,7 +315,7 @@ public final class IdUtil {
         long sequence = id & 0xFFF;
         
         System.out.println("ID: " + id);
-        System.out.println("Timestamp: " + timestamp + " (" + TimeUtils.format(timestamp) + ")");
+        System.out.println("Timestamp: " + timestamp + " (" + TimeUtil.format(timestamp) + ")");
         System.out.println("Machine ID: " + machineId);
         System.out.println("Sequence: " + sequence);
     }

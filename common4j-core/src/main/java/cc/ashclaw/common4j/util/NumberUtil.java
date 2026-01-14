@@ -43,8 +43,7 @@ public final class NumberUtil {
             return false;
         }
         try {
-            Integer.parseInt(str);
-            return true;
+            return Integer.parseInt(str) >= 0;
         } catch (NumberFormatException e) {
             return false;
         }
@@ -67,8 +66,7 @@ public final class NumberUtil {
             return false;
         }
         try {
-            Long.parseLong(str);
-            return true;
+            return Long.parseLong(str) >= 0;
         } catch (NumberFormatException e) {
             return false;
         }
@@ -91,8 +89,7 @@ public final class NumberUtil {
             return false;
         }
         try {
-            Double.parseDouble(str);
-            return true;
+            return Double.parseDouble(str) >= 0;
         } catch (NumberFormatException e) {
             return false;
         }

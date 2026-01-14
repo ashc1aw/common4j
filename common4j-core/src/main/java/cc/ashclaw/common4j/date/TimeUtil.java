@@ -5,7 +5,7 @@ package cc.ashclaw.common4j.date;
 
 import cc.ashclaw.common4j.constant.DateFormats;
 import cc.ashclaw.common4j.constant.TimeZones;
-import cc.ashclaw.common4j.util.StringUtils;
+import cc.ashclaw.common4j.util.StringUtil;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -28,7 +28,7 @@ import java.util.concurrent.TimeUnit;
  * @author b1itz7
  * @since 1.0.0
  */
-public final class TimeUtils {
+public final class TimeUtil {
 
     private static final ConcurrentHashMap<String, DateTimeFormatter> FORMATTER_CACHE =
             new ConcurrentHashMap<>(16);
@@ -45,7 +45,7 @@ public final class TimeUtils {
      * <p>
      * 防止实例化。
      */
-    private TimeUtils() {
+    private TimeUtil() {
         throw new UnsupportedOperationException("TimeUtils cannot be instantiated");
     }
 
@@ -90,7 +90,7 @@ public final class TimeUtils {
      * @return 格式化后的时间字符串
      */
     public static String format(long timestamp, String pattern) {
-        return DateTimeUtils.format(Instant.ofEpochMilli(timestamp)
+        return DateTimeUtil.format(Instant.ofEpochMilli(timestamp)
                 .atZone(TimeZones.SYSTEM_ZONE)
                 .toLocalDateTime(), pattern);
     }
@@ -107,7 +107,7 @@ public final class TimeUtils {
      * @return 格式化后的时间字符串
      */
     public static String format(long timestamp) {
-        return DateTimeUtils.format(Instant.ofEpochMilli(timestamp)
+        return DateTimeUtil.format(Instant.ofEpochMilli(timestamp)
                 .atZone(TimeZones.SYSTEM_ZONE)
                 .toLocalDateTime());
     }
@@ -119,7 +119,7 @@ public final class TimeUtils {
      */
     public static LocalTime parse(String timeStr, String pattern) {
         try {
-            if (StringUtils.isBlank(timeStr)) {
+            if (StringUtil.isBlank(timeStr)) {
                 return null;
             }
 
@@ -145,7 +145,7 @@ public final class TimeUtils {
      */
     public static LocalTime parse(String timeStr) {
         try {
-            if (StringUtils.isBlank(timeStr)) {
+            if (StringUtil.isBlank(timeStr)) {
                 return null;
             }
 

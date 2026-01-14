@@ -209,7 +209,7 @@ public final class ThreadPoolUtil {
         }
         ExecutorService executor = newSingleThreadExecutor();
         try {
-            Future<T> future = executor.submit(() -> supplier.get());
+            Future<T> future = executor.submit(supplier::get);
             return future.get(timeout, unit);
         } catch (Exception e) {
             return defaultVal;

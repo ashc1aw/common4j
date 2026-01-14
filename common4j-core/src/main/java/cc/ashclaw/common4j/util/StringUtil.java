@@ -16,7 +16,16 @@ package cc.ashclaw.common4j.util;
  * @author b1itz7
  * @since 1.0.0
  */
-public class StringUtils {
+public final class StringUtil {
+    /**
+     * Private constructor to prevent instantiation.
+     * <p>
+     * 私有构造函数，防止实例化。
+     */
+    private StringUtil() {
+        throw new UnsupportedOperationException("StringUtil cannot be instantiated.");
+    }
+
     /**
      * Checks if a CharSequence is null, empty, or whitespace-only.
      * <p>
@@ -47,7 +56,7 @@ public class StringUtils {
      * 检查字符串是否为null或空字符串（长度为0）。
      */
     public static boolean isEmpty(CharSequence cs) {
-        return cs == null || cs.length() == 0;
+        return cs == null || cs.isEmpty();
     }
 
     /**

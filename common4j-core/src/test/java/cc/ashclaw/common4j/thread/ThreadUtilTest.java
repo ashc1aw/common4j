@@ -187,7 +187,13 @@ public class ThreadUtilTest {
         threadLocalWithInitial.set(100);
         assertEquals(100, threadLocalWithInitial.get(), "threadLocal should have value 100 before remove");
         ThreadUtil.removeThreadLocal(threadLocalWithInitial);
-        assertNull(threadLocalWithInitial.get(), "threadLocal should be null after remove");
+        assertEquals(42, threadLocalWithInitial.get(), "threadLocal should return initial value 42 after remove");
+        // Test removeThreadLocal for ThreadLocal without initial value
+        threadLocal.set("test");
+        assertEquals("test", threadLocal.get(), "threadLocal should have value 'test' before remove");
+        ThreadUtil.removeThreadLocal(threadLocal);
+        assertNull(threadLocal.get(), "threadLocal without initial value should be null after remove");
+
         
         // Test interrupt methods
         Thread testThread = ThreadUtil.createThread(() -> {

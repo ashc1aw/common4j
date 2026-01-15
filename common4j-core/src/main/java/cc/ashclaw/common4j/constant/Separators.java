@@ -31,16 +31,16 @@ public final class Separators {
     
 
     /**
-     * ISO datetime separator: T
+     * ISO datetime separator
      * <p>
-     * ISO 日期时间分隔符：T
+     * ISO 日期时间分隔符
      */
     public static final String ISO_DATETIME = "T";
 
     /**
-     * Standard datetime separator: space
+     * Standard datetime separator
      * <p>
-     * 标准日期时间分隔符：空格
+     * 标准日期时间分隔符
      */
     public static final String STANDARD_DATETIME = " ";
 
@@ -52,16 +52,16 @@ public final class Separators {
     public static final String DATE = "-";
 
     /**
-     * Time part separator: :
+     * Time part separator
      * <p>
-     * 时间部分分隔符：:
+     * 时间部分分隔符
      */
     public static final String TIME = ":";
 
     /**
-     * Millisecond separator: .
+     * Millisecond separator
      * <p>
-     * 毫秒分隔符：.
+     * 毫秒分隔符
      */
     public static final String MILLISECOND = ".";
 
@@ -84,109 +84,109 @@ public final class Separators {
     
 
     /**
-     * Comma separator: ,
+     * Comma separator
      * <p>
-     * 逗号分隔符：,
+     * 逗号分隔符
      */
     public static final String COMMA = ",";
 
     /**
-     * Semicolon separator: ;
+     * Semicolon separator
      * <p>
-     * 分号分隔符：;
+     * 分号分隔符
      */
     public static final String SEMICOLON = ";";
 
     /**
-     * Pipe separator: |
+     * Pipe separator
      * <p>
-     * 竖线分隔符：|
+     * 竖线分隔符
      */
     public static final String PIPE = "|";
 
     /**
-     * Underscore separator: _
+     * Underscore separator
      * <p>
-     * 下划线分隔符：_
+     * 下划线分隔符
      */
     public static final String UNDERSCORE = "_";
 
     /**
-     * Slash separator: /
+     * Slash separator
      * <p>
-     * 斜杠分隔符：/
+     * 斜杠分隔符
      */
     public static final String SLASH = "/";
 
     /**
-     * Backslash separator: \
+     * Backslash separator
      * <p>
-     * 反斜杠分隔符：\
+     * 反斜杠分隔符
      */
     public static final String BACKSLASH = "\\";
 
     /**
-     * Asterisk separator: *
+     * Asterisk separator
      * <p>
-     * 星号分隔符：*
+     * 星号分隔符
      */
     public static final String ASTERISK = "*";
 
     /**
-     * Hash separator: #
+     * Hash separator
      * <p>
-     * 井号分隔符：#
+     * 井号分隔符
      */
     public static final String HASH = "#";
 
     /**
-     * Equals separator: =
+     * Equals separator
      * <p>
-     * 等号分隔符：=
+     * 等号分隔符
      */
     public static final String EQUALS = "=";
 
     /**
-     * Ampersand separator: &
+     * Ampersand separator
      * <p>
-     * and符号分隔符：&
+     * and符号分隔符
      */
     public static final String AMPERSAND = "&";
 
     /**
-     * At separator: @
+     * At separator
      * <p>
-     * at符号分隔符：@
+     * at符号分隔符
      */
     public static final String AT = "@";
 
     /**
-     * Question mark separator: ?
+     * Question mark separator
      * <p>
-     * 问号分隔符：?
+     * 问号分隔符
      */
     public static final String QUESTION_MARK = "?";
 
     
 
     /**
-     * Tab separator: \t
+     * Tab separator
      * <p>
-     * 制表符分隔符：\t
+     * 制表符分隔符
      */
     public static final String TAB = "\t";
 
     /**
-     * Line feed separator: \n
+     * Line feed separator
      * <p>
-     * 换行符：\n
+     * 换行符
      */
     public static final String LINE_FEED = "\n";
 
     /**
-     * Carriage return separator: \r
+     * Carriage return separator
      * <p>
-     * 回车符：\r
+     * 回车符
      */
     public static final String CARRIAGE_RETURN = "\r";
 
@@ -214,53 +214,53 @@ public final class Separators {
     
 
     /**
-     * Comma followed by space: ", "
+     * Comma followed by space
      * <p>
-     * 逗号加空格：", "
+     * 逗号加空格
      */
     public static final String COMMA_SPACE = ", ";
 
     /**
-     * Semicolon followed by space: "; "
+     * Semicolon followed by space
      * <p>
-     * 分号加空格："; "
+     * 分号加空格
      */
     public static final String SEMICOLON_SPACE = "; ";
 
     /**
-     * Colon followed by space: ": "
+     * Colon followed by space
      * <p>
-     * 冒号加空格：": "
+     * 冒号加空格
      */
     public static final String COLON_SPACE = ": ";
 
     /**
-     * Pipe followed by space: "| "
+     * Pipe followed by space
      * <p>
-     * 竖线加空格："| "
+     * 竖线加空格
      */
     public static final String PIPE_SPACE = "| ";
 
     
 
     /**
-     * JSON array/object element separator: ,
+     * JSON array/object element separator
      * <p>
-     * JSON 数组/对象分隔符：,
+     * JSON 数组/对象分隔符
      */
     public static final String JSON_ELEMENT = ",";
 
     /**
-     * Query parameter separator: &
+     * Query parameter separator
      * <p>
-     * 查询参数分隔符：&
+     * 查询参数分隔符
      */
     public static final String QUERY_PARAM = "&";
 
     /**
-     * URL path separator: /
+     * URL path separator
      * <p>
-     * URL路径分隔符：/
+     * URL路径分隔符
      */
     public static final String URL_PATH = "/";
 
@@ -279,9 +279,9 @@ public final class Separators {
     public static final String UNIX_FILE_SEPARATOR = "/";
 
     /**
-     * CSV separator: ,
+     * CSV separator
      * <p>
-     * CSV 分隔符：,
+     * CSV 分隔符
      */
     public static final String CSV = ",";
 

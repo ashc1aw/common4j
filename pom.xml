@@ -6,7 +6,7 @@
 
     <groupId>cc.ashclaw</groupId>
     <artifactId>common4j</artifactId>
-    <version>1.0.2</version>
+    <version>1.1.0</version>
     <packaging>pom</packaging>
     <description>AshClaw Common4J Library</description>
     <url>https://github.com/ashclaw/common4j</url>

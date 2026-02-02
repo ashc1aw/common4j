@@ -28,32 +28,7 @@
             </dependency>
             <dependency>
                 <groupId>cc.ashclaw</groupId>
-                <artifactId>common4j-poi</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cc.ashclaw</groupId>
                 <artifactId>common4j-cache</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cc.ashclaw</groupId>
-                <artifactId>common4j-crypto</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cc.ashclaw</groupId>
-                <artifactId>common4j-http</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cc.ashclaw</groupId>
-                <artifactId>common4j-log</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cc.ashclaw</groupId>
-                <artifactId>common4j-sse</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

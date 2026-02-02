@@ -119,6 +119,14 @@ public final class HexUtil {
         return String.format("%08x", value);
     }
 
+    public static String intToHex(int value, int length) {
+        String hex = Integer.toHexString(value);
+        if (hex.length() >= length) {
+            return hex;
+        }
+        return String.format("%0" + length + "x", value);
+    }
+
     /**
      * Converts a hexadecimal string to an integer.
      * <p>

@@ -3,13 +3,12 @@
 
 package cc.ashclaw.common4j.core.model;
 
-import cc.ashclaw.common4j.core.enums.ResultCode;
-
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import static cc.ashclaw.common4j.core.constant.DateFormats.ISO_DATETIME_WITH_TIMEZONE;
+import cc.ashclaw.common4j.core.enums.ResultCode;
 
 /**
  * Represents a standard API response result.
@@ -89,7 +88,7 @@ public class Result<T> implements Serializable {
      * <p>
      * 创建带数据的成功结果。
      *
-     * @param <T> the data type
+     * <pre>
      * @param data the response data
      * @return the success result with data
      */

@@ -6,6 +6,8 @@ package cc.ashclaw.core.util;
 import cc.ashclaw.common4j.core.util.StringUtil;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 /**
  * Test class for StringUtil result verification using JUnit 5.
  * <p>

@@ -3,6 +3,9 @@
 
 package cc.ashclaw.common4j.core.util;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 /**
  * Utility class for number operations.
  * <p>
@@ -261,5 +264,208 @@ public final class NumberUtil {
         long factor = (long) Math.pow(10, places);
         value = value * factor;
         return Math.round(value) / (double) factor;
+    }
+
+    /**
+     * Checks if a string can be parsed to a BigDecimal.
+     * <p>
+     * 检查字符串是否可以解析为BigDecimal。
+     *
+     * @param str the string to check
+     *            <p>
+     *            要检查的字符串
+     * @return true if the string can be parsed to a BigDecimal, false otherwise
+     *         <p>
+     *         如果字符串可以解析为BigDecimal则返回true，否则返回false
+     */
+    public static boolean isBigDecimal(String str) {
+        if (str == null) {
+            return false;
+        }
+        try {
+            new BigDecimal(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Parses a string to a BigDecimal, returning a default value if parsing fails.
+     * <p>
+     * 将字符串解析为BigDecimal，如果解析失败则返回默认值。
+     *
+     * @param str          the string to parse
+     *                     <p>
+     *                     要解析的字符串
+     * @param defaultValue the default value to return if parsing fails
+     *                     <p>
+     *                     如果解析失败则返回的默认值
+     * @return the parsed BigDecimal or the default value
+     *         <p>
+     *         解析后的BigDecimal或默认值
+     */
+    public static BigDecimal parseBigDecimal(String str, BigDecimal defaultValue) {
+        if (str == null) {
+            return defaultValue;
+        }
+        try {
+            return new BigDecimal(str);
+        } catch (NumberFormatException e) {
+            return defaultValue;
+        }
+    }
+
+    /**
+     * Checks if a BigDecimal is between two values (inclusive).
+     * <p>
+     * 检查BigDecimal是否在两个值之间（包括边界）。
+     *
+     * @param value the number to check
+     *              <p>
+     *              要检查的数字
+     * @param min   the minimum value
+     *              <p>
+     *              最小值
+     * @param max   the maximum value
+     *              <p>
+     *              最大值
+     * @return true if the number is between min and max (inclusive), false otherwise
+     *         <p>
+     *         如果数字在min和max之间（包括边界）则返回true，否则返回false
+     */
+    public static boolean isBetween(BigDecimal value, BigDecimal min, BigDecimal max) {
+        return value.compareTo(min) >= 0 && value.compareTo(max) <= 0;
+    }
+
+    /**
+     * Rounds a BigDecimal to a specified number of decimal places using HALF_UP rounding mode.
+     * <p>
+     * 将BigDecimal四舍五入到指定的小数位数，使用HALF_UP舍入模式。
+     *
+     * @param value  the value to round
+     *               <p>
+     *               要四舍五入的值
+     * @param places the number of decimal places
+     *               <p>
+     *               小数位数
+     * @return the rounded value
+     *         <p>
+     *         四舍五入后的值
+     */
+    public static BigDecimal round(BigDecimal value, int places) {
+        if (places < 0) {
+            throw new IllegalArgumentException("Number of decimal places must be non-negative");
+        }
+        return value.setScale(places, RoundingMode.HALF_UP);
+    }
+
+    /**
+     * Multiplies two BigDecimals and rounds to the specified number of decimal places using HALF_UP rounding mode.
+     * <p>
+     * 乘以两个BigDecimal并四舍五入到指定的小数位数，使用HALF_UP舍入模式。
+     *
+     * @param multiplicand the first value to multiply
+     *                     <p>
+     *                     被乘数
+     * @param multiplier   the second value to multiply
+     *                     <p>
+     *                     乘数
+     * @param places       the number of decimal places to round to
+     *                     <p>
+     *                     要四舍五入到的小数位数
+     * @return the product of the two values, rounded to the specified number of decimal places
+     *         <p>
+     *         两个值的乘积，四舍五入到指定的小数位数
+     */
+    public static BigDecimal multiply(BigDecimal multiplicand, BigDecimal multiplier, int places) {
+        return multiply(multiplicand, multiplier, places, RoundingMode.HALF_UP);
+    }
+
+    /**
+     * Multiplies two BigDecimals and rounds to the specified number of decimal places using the specified rounding mode.
+     * <p>
+     * 乘以两个BigDecimal并四舍五入到指定的小数位数，使用指定的舍入模式。
+     *
+     * @param multiplicand the first value to multiply
+     *                     <p>
+     *                     被乘数
+     * @param multiplier   the second value to multiply
+     *                     <p>
+     *                     乘数
+     * @param places       the number of decimal places to round to
+     *                     <p>
+     *                     要四舍五入到的小数位数
+     * @param roundingMode the rounding mode to use
+     *                     <p>
+     *                     要使用的舍入模式
+     * @return the product of the two values, rounded to the specified number of decimal places
+     *         <p>
+     *         两个值的乘积，四舍五入到指定的小数位数
+     */
+    public static BigDecimal multiply(BigDecimal multiplicand, BigDecimal multiplier, int places, RoundingMode roundingMode) {
+        if (places < 0) {
+            throw new IllegalArgumentException("Number of decimal places must be non-negative");
+        }
+        if (roundingMode == null) {
+            throw new IllegalArgumentException("Rounding mode cannot be null");
+        }
+        return multiplicand.multiply(multiplier).setScale(places, roundingMode);
+    }
+
+    /**
+     * Divides two BigDecimals and rounds to the specified number of decimal places using HALF_UP rounding mode.
+     * <p>
+     * 除以两个BigDecimal并四舍五入到指定的小数位数，使用HALF_UP舍入模式。
+     *
+     * @param dividend the value to be divided
+     *                 <p>
+     *                 被除数
+     * @param divisor  the value to divide by
+     *                 <p>
+     *                 除数
+     * @param places   the number of decimal places to round to
+     *                 <p>
+     *                 要四舍五入到的小数位数
+     * @return the quotient of the two values, rounded to the specified number of decimal places
+     *         <p>
+     *         两个值的商，四舍五入到指定的小数位数
+     */
+    public static BigDecimal divide(BigDecimal dividend, BigDecimal divisor, int places) {
+        return divide(dividend, divisor, places, RoundingMode.HALF_UP);
+    }
+
+    /**
+     * Divides two BigDecimals and rounds to the specified number of decimal places using the specified rounding mode.
+     * <p>
+     * 除以两个BigDecimal并四舍五入到指定的小数位数，使用指定的舍入模式。
+     *
+     * @param dividend     the value to be divided
+     *                     <p>
+     *                     被除数
+     * @param divisor      the value to divide by
+     *                     <p>
+     *                     除数
+     * @param places       the number of decimal places to round to
+     *                     <p>
+     *                     要四舍五入到的小数位数
+     * @param roundingMode the rounding mode to use
+     *                     <p>
+     *                     要使用的舍入模式
+     * @return the quotient of the two values, rounded to the specified number of decimal places
+     *         <p>
+     *         两个值的商，四舍五入到指定的小数位数
+     */
+    public static BigDecimal divide(BigDecimal dividend, BigDecimal divisor, int places, RoundingMode roundingMode) {
+        if (places < 0) {
+            throw new IllegalArgumentException("Number of decimal places must be non-negative");
+        }
+        if (roundingMode == null) {
+            throw new IllegalArgumentException("Rounding mode cannot be null");
+        }
+        if (BigDecimal.ZERO.compareTo(divisor) == 0) {
+            throw new ArithmeticException("Cannot divide by zero");
+        }
+        return dividend.divide(divisor, places, roundingMode);
     }
 }

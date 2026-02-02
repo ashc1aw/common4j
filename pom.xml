@@ -12,13 +12,8 @@
     <url>https://github.com/ashclaw/common4j</url>
     <modules>
         <module>common4j-core</module>
-        <module>common4j-poi</module>
         <module>common4j-bom</module>
         <module>common4j-cache</module>
-        <module>common4j-crypto</module>
-        <module>common4j-http</module>
-        <module>common4j-log</module>
-        <module>common4j-sse</module>
     </modules>
 
     <properties>

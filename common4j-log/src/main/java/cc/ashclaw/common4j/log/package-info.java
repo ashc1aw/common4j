@@ -1,1 +1,0 @@
-package cc.ashclaw.common4j.log;

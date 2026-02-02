@@ -1,0 +1,129 @@
+# Common4j Cache Module 完整配置示例
+# 适用于 Spring Boot 应用
+
+common4j:
+  cache:
+    # 是否启用缓存功能 (默认: true)
+    enabled: true
+    
+    # 默认缓存类型 (可选: LOCAL, DISTRIBUTED, MULTI_LEVEL) (默认: MULTI_LEVEL)
+    type: MULTI_LEVEL
+    
+    # 默认缓存过期时间 (默认: 1小时)
+    expire-time: 1h
+    
+    # 是否启用缓存保护机制 (默认: true)
+    protection-enabled: true
+    
+    # 缓存穿透保护 - 空值过期时间 (默认: 5分钟)
+    penetration-expire-time: 5m
+    
+    # 缓存击穿保护 - 互斥锁等待时间 (默认: 30秒)
+    breakdown-wait-time: 30s
+    
+    # 缓存雪崩保护 - 过期时间随机范围百分比 (默认: 10%)
+    avalanche-random-range: 10
+    
+    # Redisson 分布式缓存配置
+    redisson:
+      # Redis 服务器地址 (默认: redis://localhost:6379)
+      address: "redis://localhost:6379"
+      
+      # Redis 密码 (可选)
+      password: "your-redis-password"
+      
+      # Redis 数据库索引 (默认: 0)
+      database: 0
+      
+      # Redis 连接超时时间 (默认: 10秒)
+      connection-timeout: 10s
+      
+      # Redis 命令超时时间 (默认: 5秒)
+      command-timeout: 5s
+    
+    # Caffeine 本地缓存配置
+    caffeine:
+      # 初始容量 (默认: 100)
+      initial-capacity: 100
+      
+      # 最大容量 (默认: 1000)
+      maximum-size: 1000
+      
+      # 写入后过期时间 (默认: 1小时)
+      expire-after-write: 1h
+      
+      # 访问后过期时间 (默认: 30分钟)
+      expire-after-access: 30m
+      
+      # 是否启用统计收集 (默认: false)
+      stats-enabled: false
+    
+    # 多级缓存配置
+    multi-level:
+      # 是否启用多级缓存 (默认: true)
+      enabled: true
+      
+      # 本地缓存过期时间 (默认: 10分钟)
+      local-expire-time: 10m
+      
+      # 是否启用缓存同步 (默认: true)
+      sync-enabled: true
+      
+      # 缓存同步延迟时间 (默认: 1秒)
+      sync-delay: 1s
+    
+    # 特定缓存实例的个性化配置
+    configs:
+      # 用户信息缓存配置
+      user-cache:
+        # 缓存类型 (可选: LOCAL, DISTRIBUTED, MULTI_LEVEL)
+        type: MULTI_LEVEL
+        
+        # 过期时间 (覆盖全局配置)
+        expire-time: 30m
+        
+        # 是否启用保护机制 (覆盖全局配置)
+        protection-enabled: true
+      
+      # 商品信息缓存配置
+      product-cache:
+        type: DISTRIBUTED
+        expire-time: 1h
+        protection-enabled: false
+      
+      # 配置信息缓存 (使用本地缓存)
+      config-cache:
+        type: LOCAL
+        expire-time: 24h
+        protection-enabled: true
+
+# 示例：使用缓存注解的配置
+# 在代码中使用以下注解：
+# @Cacheable(cacheName = "user-cache", key = "#userId")
+# @CachePut(cacheName = "user-cache", key = "#user.id")
+# @CacheEvict(cacheName = "user-cache", key = "#userId")
+# @CacheLock(lockName = "user-lock", key = "#userId", lockType = LockType.REENTRANT)
+# @CachePreheat(cacheName = "config-cache", cron = "0 0 2 * * ?")
+
+# 缓存类型说明：
+# LOCAL - 本地内存缓存，基于 Caffeine 实现
+# DISTRIBUTED - 分布式缓存，基于 Redisson + Redis 实现
+# MULTI_LEVEL - 多级缓存，结合本地和分布式缓存
+
+# 锁类型说明：
+# REENTRANT - 可重入锁
+# FAIR - 公平锁
+# READ - 读锁
+# WRITE - 写锁
+# RED - 红锁（多节点分布式锁）
+
+# 时间格式说明：
+# 1s - 1秒
+# 5m - 5分钟
+# 1h - 1小时
+# 2d - 2天
+
+# 缓存保护机制：
+# 1. 缓存穿透保护：防止查询不存在的数据
+# 2. 缓存击穿保护：防止热点数据失效时大量请求打到数据库
+# 3. 缓存雪崩保护：防止大量缓存同时过期导致数据库压力

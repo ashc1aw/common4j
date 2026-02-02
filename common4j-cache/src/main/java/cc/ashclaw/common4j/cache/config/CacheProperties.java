@@ -23,7 +23,6 @@ import java.util.Map;
  * @since 1.1.0
  */
 @ConfigurationProperties(prefix = "common4j.cache")
-@Data
 public class CacheProperties {
     
     /**
@@ -102,13 +101,101 @@ public class CacheProperties {
      * 特定缓存的配置项。
      */
     private Map<String, CacheConfig> configs = new HashMap<>();
+
+    // Getter and Setter methods
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public CacheType getType() {
+        return type;
+    }
+
+    public void setType(CacheType type) {
+        this.type = type;
+    }
+
+    public Duration getExpireTime() {
+        return expireTime;
+    }
+
+    public void setExpireTime(Duration expireTime) {
+        this.expireTime = expireTime;
+    }
+
+    public boolean isProtectionEnabled() {
+        return protectionEnabled;
+    }
+
+    public void setProtectionEnabled(boolean protectionEnabled) {
+        this.protectionEnabled = protectionEnabled;
+    }
+
+    public Duration getPenetrationExpireTime() {
+        return penetrationExpireTime;
+    }
+
+    public void setPenetrationExpireTime(Duration penetrationExpireTime) {
+        this.penetrationExpireTime = penetrationExpireTime;
+    }
+
+    public Duration getBreakdownWaitTime() {
+        return breakdownWaitTime;
+    }
+
+    public void setBreakdownWaitTime(Duration breakdownWaitTime) {
+        this.breakdownWaitTime = breakdownWaitTime;
+    }
+
+    public int getAvalancheRandomRange() {
+        return avalancheRandomRange;
+    }
+
+    public void setAvalancheRandomRange(int avalancheRandomRange) {
+        this.avalancheRandomRange = avalancheRandomRange;
+    }
+
+    public RedissonProperties getRedisson() {
+        return redisson;
+    }
+
+    public void setRedisson(RedissonProperties redisson) {
+        this.redisson = redisson;
+    }
+
+    public CaffeineProperties getCaffeine() {
+        return caffeine;
+    }
+
+    public void setCaffeine(CaffeineProperties caffeine) {
+        this.caffeine = caffeine;
+    }
+
+    public MultiLevelProperties getMultiLevel() {
+        return multiLevel;
+    }
+
+    public void setMultiLevel(MultiLevelProperties multiLevel) {
+        this.multiLevel = multiLevel;
+    }
+
+    public Map<String, CacheConfig> getConfigs() {
+        return configs;
+    }
+
+    public void setConfigs(Map<String, CacheConfig> configs) {
+        this.configs = configs;
+    }
     
     /**
      * Configuration properties for Redisson distributed caching.
      * <p>
      * Redisson分布式缓存的配置属性。
      */
-    @Data
     public static class RedissonProperties {
         
         /**
@@ -146,6 +233,47 @@ public class CacheProperties {
          */
         private Duration commandTimeout = Duration.ofSeconds(5);
 
+        // Getter and Setter methods
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
+
+        public String getPassword() {
+            return password;
+        }
+
+        public void setPassword(String password) {
+            this.password = password;
+        }
+
+        public int getDatabase() {
+            return database;
+        }
+
+        public void setDatabase(int database) {
+            this.database = database;
+        }
+
+        public Duration getConnectionTimeout() {
+            return connectionTimeout;
+        }
+
+        public void setConnectionTimeout(Duration connectionTimeout) {
+            this.connectionTimeout = connectionTimeout;
+        }
+
+        public Duration getCommandTimeout() {
+            return commandTimeout;
+        }
+
+        public void setCommandTimeout(Duration commandTimeout) {
+            this.commandTimeout = commandTimeout;
+        }
+
     }
     
     /**
@@ -153,7 +281,6 @@ public class CacheProperties {
      * <p>
      * Caffeine本地缓存的配置属性。
      */
-    @Data
     public static class CaffeineProperties {
         
         /**
@@ -191,6 +318,47 @@ public class CacheProperties {
          */
         private boolean statsEnabled = false;
         
+        // Getter and Setter methods
+        public int getInitialCapacity() {
+            return initialCapacity;
+        }
+
+        public void setInitialCapacity(int initialCapacity) {
+            this.initialCapacity = initialCapacity;
+        }
+
+        public long getMaximumSize() {
+            return maximumSize;
+        }
+
+        public void setMaximumSize(long maximumSize) {
+            this.maximumSize = maximumSize;
+        }
+
+        public Duration getExpireAfterWrite() {
+            return expireAfterWrite;
+        }
+
+        public void setExpireAfterWrite(Duration expireAfterWrite) {
+            this.expireAfterWrite = expireAfterWrite;
+        }
+
+        public Duration getExpireAfterAccess() {
+            return expireAfterAccess;
+        }
+
+        public void setExpireAfterAccess(Duration expireAfterAccess) {
+            this.expireAfterAccess = expireAfterAccess;
+        }
+
+        public boolean isStatsEnabled() {
+            return statsEnabled;
+        }
+
+        public void setStatsEnabled(boolean statsEnabled) {
+            this.statsEnabled = statsEnabled;
+        }
+        
     }
     
     /**
@@ -198,7 +366,6 @@ public class CacheProperties {
      * <p>
      * 多级缓存的配置属性。
      */
-    @Data
     public static class MultiLevelProperties {
         
         /**
@@ -228,6 +395,39 @@ public class CacheProperties {
          * 缓存同步的延迟时间。
          */
         private Duration syncDelay = Duration.ofSeconds(1);
+        
+        // Getter and Setter methods
+        public boolean isEnabled() {
+            return enabled;
+        }
+
+        public void setEnabled(boolean enabled) {
+            this.enabled = enabled;
+        }
+
+        public Duration getLocalExpireTime() {
+            return localExpireTime;
+        }
+
+        public void setLocalExpireTime(Duration localExpireTime) {
+            this.localExpireTime = localExpireTime;
+        }
+
+        public boolean isSyncEnabled() {
+            return syncEnabled;
+        }
+
+        public void setSyncEnabled(boolean syncEnabled) {
+            this.syncEnabled = syncEnabled;
+        }
+
+        public Duration getSyncDelay() {
+            return syncDelay;
+        }
+
+        public void setSyncDelay(Duration syncDelay) {
+            this.syncDelay = syncDelay;
+        }
     }
     
     /**
@@ -235,7 +435,6 @@ public class CacheProperties {
      * <p>
      * 特定缓存实例的配置。
      */
-    @Data
     public static class CacheConfig {
         
         /**
@@ -258,6 +457,31 @@ public class CacheProperties {
          * 是否为此特定缓存启用保护。
          */
         private Boolean protectionEnabled;
+        
+        // Getter and Setter methods
+        public CacheType getType() {
+            return type;
+        }
+
+        public void setType(CacheType type) {
+            this.type = type;
+        }
+
+        public Duration getExpireTime() {
+            return expireTime;
+        }
+
+        public void setExpireTime(Duration expireTime) {
+            this.expireTime = expireTime;
+        }
+
+        public Boolean getProtectionEnabled() {
+            return protectionEnabled;
+        }
+
+        public void setProtectionEnabled(Boolean protectionEnabled) {
+            this.protectionEnabled = protectionEnabled;
+        }
     }
 
 }

@@ -17,15 +17,15 @@ common4j 是一个基于 JDK 25 构建的轻量级、高性能 Java 工具库，
 
 ## 🛠️ 安装与使用
 
-### Maven (待发布)
+### Maven
 
-项目正式发布后，在 pom.xml 中添加以下依赖：
+在 pom.xml 中添加以下依赖：
 
 ```xml
 <dependency>
     <groupId>cc.ashclaw</groupId>
     <artifactId>common4j</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 

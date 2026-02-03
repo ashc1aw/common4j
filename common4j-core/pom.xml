@@ -11,6 +11,7 @@
 
     <artifactId>common4j-core</artifactId>
     <name>common4j-core</name>
+    <packaging>jar</packaging>
     <description>AshClaw Common4J Core Library</description>
     <url>https://github.com/ashclaw/common4j</url>
 

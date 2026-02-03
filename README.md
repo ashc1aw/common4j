@@ -17,15 +17,15 @@ common4j is a lightweight, high-performance Java utility library built on JDK 25
 
 ## 🛠️ Installation and Usage
 
-### Maven (Coming Soon)
+### Maven
 
-After the project is officially released, add the following dependency to your pom.xml:
+add the following dependency to your pom.xml:
 
 ```xml
 <dependency>
     <groupId>cc.ashclaw</groupId>
     <artifactId>common4j</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 

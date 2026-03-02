@@ -334,4 +334,60 @@ public final class StringUtil {
 
         return str.substring(start, end);
     }
+
+    /**
+     * Checks if a CharSequence contains another CharSequence.
+     * <p>
+     * 检查字符串是否包含另一个字符串。
+     * <p>
+     * This method handles null values gracefully. If both parameters are null,
+     * it returns true. If only one parameter is null, it returns false.
+     * <p>
+     * 此方法优雅地处理null值。如果两个参数都为null，则返回true。如果只有一个参数为null，则返回false。
+     *
+     * @param str       the CharSequence to check, may be null
+     *                  <p>
+     *                  要检查的字符串，可以为null
+     * @param searchStr the CharSequence to find, may be null
+     *                  <p>
+     *                  要查找的字符串，可以为null
+     * @return {@code true} if the CharSequence contains the search CharSequence,
+     *         {@code false} otherwise
+     *         <p>
+     *         如果字符串包含要查找的字符串则返回 {@code true}，否则返回 {@code false}
+     */
+    public static boolean contains(CharSequence str, CharSequence searchStr) {
+        if (str == null || searchStr == null) {
+            return str == searchStr;
+        }
+
+        int strLen = str.length();
+        int searchStrLen = searchStr.length();
+
+        // Handle empty search string
+        if (searchStrLen == 0) {
+            return true;
+        }
+
+        if (searchStrLen > strLen) {
+            return false;
+        }
+
+        for (int i = 0; i <= strLen - searchStrLen; i++) {
+            if (str.charAt(i) == searchStr.charAt(0)) {
+                boolean found = true;
+                for (int j = 1; j < searchStrLen; j++) {
+                    if (str.charAt(i + j) != searchStr.charAt(j)) {
+                        found = false;
+                        break;
+                    }
+                }
+                if (found) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
 }

@@ -171,4 +171,43 @@ public class StringUtilTest {
         assertEquals("es", StringUtil.substring("test", -3, -1), "substring should handle negative indices");
         assertEquals("", StringUtil.substring("test", 2, 1), "substring should return empty for start > end");
     }
+
+    /**
+     * Test the contains method of StringUtil.
+     * <p>
+     * 测试StringUtil的contains方法。
+     */
+    @Test
+    void testContainsMethod() {
+        // Test null handling
+        assertTrue(StringUtil.contains(null, null), "contains should return true for both null");
+        assertFalse(StringUtil.contains(null, "test"), "contains should return false for null string");
+        assertFalse(StringUtil.contains("test", null), "contains should return false for null search string");
+        
+        // Test empty strings
+        assertTrue(StringUtil.contains("", ""), "contains should return true for both empty strings");
+        assertTrue(StringUtil.contains("test", ""), "contains should return true for empty search string");
+        assertFalse(StringUtil.contains("", "test"), "contains should return false for empty string with non-empty search");
+        
+        // Test exact matches
+        assertTrue(StringUtil.contains("test", "test"), "contains should return true for exact match");
+        assertTrue(StringUtil.contains("this is a test", "test"), "contains should return true for substring match");
+        assertTrue(StringUtil.contains("test string", "test"), "contains should return true for prefix match");
+        assertTrue(StringUtil.contains("string test", "test"), "contains should return true for suffix match");
+        
+        // Test non-matches
+        assertFalse(StringUtil.contains("test", "testing"), "contains should return false for longer search string");
+        assertFalse(StringUtil.contains("test", "example"), "contains should return false for non-matching string");
+        assertFalse(StringUtil.contains("test", "TEST"), "contains should return false for case-sensitive non-match");
+        
+        // Test partial matches
+        assertTrue(StringUtil.contains("hello world", "lo wo"), "contains should return true for middle substring");
+        assertTrue(StringUtil.contains("multiple words here", "words"), "contains should return true for word match");
+        
+        // Test edge cases
+        assertTrue(StringUtil.contains("test", "t"), "contains should return true for single character match");
+        assertTrue(StringUtil.contains("test", "e"), "contains should return true for middle character match");
+        assertTrue(StringUtil.contains("test", "s"), "contains should return true for character match");
+        assertFalse(StringUtil.contains("test", "x"), "contains should return false for non-existing character");
+    }
 }

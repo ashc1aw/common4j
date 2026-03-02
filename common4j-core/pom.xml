@@ -6,14 +6,14 @@
     <parent>
         <groupId>cc.ashclaw</groupId>
         <artifactId>common4j</artifactId>
-        <version>1.1.0</version>
+        <version>1.1.2</version>
     </parent>
 
     <artifactId>common4j-core</artifactId>
     <name>common4j-core</name>
     <packaging>jar</packaging>
     <description>AshClaw Common4J Core Library</description>
-    <url>https://github.com/ashclaw/common4j</url>
+    <url>https://github.com/ashc1aw/common4j</url>
 
 
 </project>

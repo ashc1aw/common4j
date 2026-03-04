@@ -227,6 +227,76 @@ public final class StringUtil {
     }
 
     /**
+     * Checks if a CharSequence is equal to any of the specified CharSequences.
+     * <p>
+     * 检查字符串是否与指定的任意一个字符串相等。
+     * <p>
+     * This method performs case-sensitive comparison. If the target CharSequence
+     * is null, it will only return true if one of the search CharSequences is also null.
+     * <p>
+     * 此方法执行区分大小写的比较。如果目标字符串为null，则只有当搜索字符串中也有null时才返回true。
+     *
+     * @param target the CharSequence to check, may be null
+     *                <p>
+     *                要检查的字符串，可以为null
+     * @param searchStrs the CharSequences to compare against, may be null or empty
+     *                   <p>
+     *                   要比较的字符串数组，可以为null或空
+     * @return {@code true} if the target CharSequence is equal to any of the search CharSequences,
+     *         {@code false} otherwise
+     *         <p>
+     *         如果目标字符串与任意一个搜索字符串相等则返回 {@code true}，否则返回 {@code false}
+     */
+    public static boolean equalsAny(CharSequence target, CharSequence... searchStrs) {
+        if (searchStrs == null || searchStrs.length == 0) {
+            return false;
+        }
+        
+        for (CharSequence searchStr : searchStrs) {
+            if (equals(target, searchStr)) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+
+    /**
+     * Checks if a CharSequence is equal to any of the specified CharSequences, ignoring case.
+     * <p>
+     * 检查字符串是否与指定的任意一个字符串相等（忽略大小写）。
+     * <p>
+     * This method performs case-insensitive comparison. If the target CharSequence
+     * is null, it will only return true if one of the search CharSequences is also null.
+     * <p>
+     * 此方法执行不区分大小写的比较。如果目标字符串为null，则只有当搜索字符串中也有null时才返回true。
+     *
+     * @param target the CharSequence to check, may be null
+     *                <p>
+     *                要检查的字符串，可以为null
+     * @param searchStrs the CharSequences to compare against, may be null or empty
+     *                   <p>
+     *                   要比较的字符串数组，可以为null或空
+     * @return {@code true} if the target CharSequence is equal to any of the search CharSequences
+     *         (ignoring case), {@code false} otherwise
+     *         <p>
+     *         如果目标字符串与任意一个搜索字符串相等（忽略大小写）则返回 {@code true}，否则返回 {@code false}
+     */
+    public static boolean equalsAnyIgnoreCase(CharSequence target, CharSequence... searchStrs) {
+        if (searchStrs == null || searchStrs.length == 0) {
+            return false;
+        }
+        
+        for (CharSequence searchStr : searchStrs) {
+            if (equalsIgnoreCase(target, searchStr)) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+
+    /**
      * Checks if a CharSequence starts with the specified prefix.
      * <p>
      * 检查字符串是否以指定前缀开始。
@@ -333,5 +403,61 @@ public final class StringUtil {
         }
 
         return str.substring(start, end);
+    }
+
+    /**
+     * Checks if a CharSequence contains another CharSequence.
+     * <p>
+     * 检查字符串是否包含另一个字符串。
+     * <p>
+     * This method handles null values gracefully. If both parameters are null,
+     * it returns true. If only one parameter is null, it returns false.
+     * <p>
+     * 此方法优雅地处理null值。如果两个参数都为null，则返回true。如果只有一个参数为null，则返回false。
+     *
+     * @param str       the CharSequence to check, may be null
+     *                  <p>
+     *                  要检查的字符串，可以为null
+     * @param searchStr the CharSequence to find, may be null
+     *                  <p>
+     *                  要查找的字符串，可以为null
+     * @return {@code true} if the CharSequence contains the search CharSequence,
+     *         {@code false} otherwise
+     *         <p>
+     *         如果字符串包含要查找的字符串则返回 {@code true}，否则返回 {@code false}
+     */
+    public static boolean contains(CharSequence str, CharSequence searchStr) {
+        if (str == null || searchStr == null) {
+            return str == searchStr;
+        }
+
+        int strLen = str.length();
+        int searchStrLen = searchStr.length();
+
+        // Handle empty search string
+        if (searchStrLen == 0) {
+            return true;
+        }
+
+        if (searchStrLen > strLen) {
+            return false;
+        }
+
+        for (int i = 0; i <= strLen - searchStrLen; i++) {
+            if (str.charAt(i) == searchStr.charAt(0)) {
+                boolean found = true;
+                for (int j = 1; j < searchStrLen; j++) {
+                    if (str.charAt(i + j) != searchStr.charAt(j)) {
+                        found = false;
+                        break;
+                    }
+                }
+                if (found) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }

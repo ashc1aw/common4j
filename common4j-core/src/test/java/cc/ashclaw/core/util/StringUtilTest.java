@@ -171,4 +171,112 @@ public class StringUtilTest {
         assertEquals("es", StringUtil.substring("test", -3, -1), "substring should handle negative indices");
         assertEquals("", StringUtil.substring("test", 2, 1), "substring should return empty for start > end");
     }
+
+    /**
+     * Test the contains method of StringUtil.
+     * <p>
+     * 测试StringUtil的contains方法。
+     */
+    @Test
+    void testContainsMethod() {
+        // Test null handling
+        assertTrue(StringUtil.contains(null, null), "contains should return true for both null");
+        assertFalse(StringUtil.contains(null, "test"), "contains should return false for null string");
+        assertFalse(StringUtil.contains("test", null), "contains should return false for null search string");
+        
+        // Test empty strings
+        assertTrue(StringUtil.contains("", ""), "contains should return true for both empty strings");
+        assertTrue(StringUtil.contains("test", ""), "contains should return true for empty search string");
+        assertFalse(StringUtil.contains("", "test"), "contains should return false for empty string with non-empty search");
+        
+        // Test exact matches
+        assertTrue(StringUtil.contains("test", "test"), "contains should return true for exact match");
+        assertTrue(StringUtil.contains("this is a test", "test"), "contains should return true for substring match");
+        assertTrue(StringUtil.contains("test string", "test"), "contains should return true for prefix match");
+        assertTrue(StringUtil.contains("string test", "test"), "contains should return true for suffix match");
+        
+        // Test non-matches
+        assertFalse(StringUtil.contains("test", "testing"), "contains should return false for longer search string");
+        assertFalse(StringUtil.contains("test", "example"), "contains should return false for non-matching string");
+        assertFalse(StringUtil.contains("test", "TEST"), "contains should return false for case-sensitive non-match");
+        
+        // Test partial matches
+        assertTrue(StringUtil.contains("hello world", "lo wo"), "contains should return true for middle substring");
+        assertTrue(StringUtil.contains("multiple words here", "words"), "contains should return true for word match");
+        
+        // Test edge cases
+        assertTrue(StringUtil.contains("test", "t"), "contains should return true for single character match");
+        assertTrue(StringUtil.contains("test", "e"), "contains should return true for middle character match");
+        assertTrue(StringUtil.contains("test", "s"), "contains should return true for character match");
+        assertFalse(StringUtil.contains("test", "x"), "contains should return false for non-existing character");
+    }
+
+    /**
+     * Test the equalsAny method of StringUtil.
+     * <p>
+     * 测试StringUtil的equalsAny方法。
+     */
+    @Test
+    void testEqualsAnyMethod() {
+        // Test null handling
+        assertTrue(StringUtil.equalsAny(null, null, "test"), "equalsAny should return true for null target and null in search");
+        assertFalse(StringUtil.equalsAny(null, "test", "example"), "equalsAny should return false for null target with non-null search");
+        assertFalse(StringUtil.equalsAny("test", (CharSequence[]) null), "equalsAny should return false for null search array");
+        assertFalse(StringUtil.equalsAny("test"), "equalsAny should return false for empty search array");
+        
+        // Test exact matches
+        assertTrue(StringUtil.equalsAny("test", "test", "example"), "equalsAny should return true for exact match");
+        assertTrue(StringUtil.equalsAny("test", "example", "test"), "equalsAny should return true for match in different position");
+        assertTrue(StringUtil.equalsAny("test", "test"), "equalsAny should return true for single match");
+        
+        // Test non-matches
+        assertFalse(StringUtil.equalsAny("test", "testing", "example"), "equalsAny should return false for no match");
+        assertFalse(StringUtil.equalsAny("test", "TEST", "Test"), "equalsAny should return false for case-sensitive non-match");
+        
+        // Test empty strings
+        assertTrue(StringUtil.equalsAny("", "", "test"), "equalsAny should return true for empty string match");
+        assertFalse(StringUtil.equalsAny("", "test", "example"), "equalsAny should return false for empty string with non-empty search");
+        
+        // Test multiple matches
+        assertTrue(StringUtil.equalsAny("test", "test", "test", "example"), "equalsAny should return true for multiple matches");
+        
+        // Test edge cases
+        assertTrue(StringUtil.equalsAny("a", "a", "b", "c"), "equalsAny should return true for single character match");
+        assertFalse(StringUtil.equalsAny("a", "b", "c", "d"), "equalsAny should return false for single character non-match");
+    }
+
+    /**
+     * Test the equalsAnyIgnoreCase method of StringUtil.
+     * <p>
+     * 测试StringUtil的equalsAnyIgnoreCase方法。
+     */
+    @Test
+    void testEqualsAnyIgnoreCaseMethod() {
+        // Test null handling
+        assertTrue(StringUtil.equalsAnyIgnoreCase(null, null, "test"), "equalsAnyIgnoreCase should return true for null target and null in search");
+        assertFalse(StringUtil.equalsAnyIgnoreCase(null, "test", "example"), "equalsAnyIgnoreCase should return false for null target with non-null search");
+        assertFalse(StringUtil.equalsAnyIgnoreCase("test", (CharSequence[]) null), "equalsAnyIgnoreCase should return false for null search array");
+        assertFalse(StringUtil.equalsAnyIgnoreCase("test"), "equalsAnyIgnoreCase should return false for empty search array");
+        
+        // Test case-insensitive matches
+        assertTrue(StringUtil.equalsAnyIgnoreCase("test", "TEST", "example"), "equalsAnyIgnoreCase should return true for uppercase match");
+        assertTrue(StringUtil.equalsAnyIgnoreCase("TEST", "test", "example"), "equalsAnyIgnoreCase should return true for lowercase match");
+        assertTrue(StringUtil.equalsAnyIgnoreCase("Test", "tEsT", "example"), "equalsAnyIgnoreCase should return true for mixed case match");
+        assertTrue(StringUtil.equalsAnyIgnoreCase("test", "test", "TEST", "Test"), "equalsAnyIgnoreCase should return true for multiple case variations");
+        
+        // Test non-matches
+        assertFalse(StringUtil.equalsAnyIgnoreCase("test", "testing", "example"), "equalsAnyIgnoreCase should return false for no match");
+        assertFalse(StringUtil.equalsAnyIgnoreCase("test", "testing", "TESTING"), "equalsAnyIgnoreCase should return false for different strings");
+        
+        // Test empty strings
+        assertTrue(StringUtil.equalsAnyIgnoreCase("", "", "test"), "equalsAnyIgnoreCase should return true for empty string match");
+        assertFalse(StringUtil.equalsAnyIgnoreCase("", "test", "example"), "equalsAnyIgnoreCase should return false for empty string with non-empty search");
+        
+        // Test multiple matches
+        assertTrue(StringUtil.equalsAnyIgnoreCase("test", "TEST", "test", "example"), "equalsAnyIgnoreCase should return true for multiple matches");
+        
+        // Test edge cases
+        assertTrue(StringUtil.equalsAnyIgnoreCase("A", "a", "b", "c"), "equalsAnyIgnoreCase should return true for single character case-insensitive match");
+        assertFalse(StringUtil.equalsAnyIgnoreCase("A", "b", "c", "d"), "equalsAnyIgnoreCase should return false for single character non-match");
+    }
 }

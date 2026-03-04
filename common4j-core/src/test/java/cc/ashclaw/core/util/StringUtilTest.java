@@ -210,4 +210,73 @@ public class StringUtilTest {
         assertTrue(StringUtil.contains("test", "s"), "contains should return true for character match");
         assertFalse(StringUtil.contains("test", "x"), "contains should return false for non-existing character");
     }
+
+    /**
+     * Test the equalsAny method of StringUtil.
+     * <p>
+     * 测试StringUtil的equalsAny方法。
+     */
+    @Test
+    void testEqualsAnyMethod() {
+        // Test null handling
+        assertTrue(StringUtil.equalsAny(null, null, "test"), "equalsAny should return true for null target and null in search");
+        assertFalse(StringUtil.equalsAny(null, "test", "example"), "equalsAny should return false for null target with non-null search");
+        assertFalse(StringUtil.equalsAny("test", (CharSequence[]) null), "equalsAny should return false for null search array");
+        assertFalse(StringUtil.equalsAny("test"), "equalsAny should return false for empty search array");
+        
+        // Test exact matches
+        assertTrue(StringUtil.equalsAny("test", "test", "example"), "equalsAny should return true for exact match");
+        assertTrue(StringUtil.equalsAny("test", "example", "test"), "equalsAny should return true for match in different position");
+        assertTrue(StringUtil.equalsAny("test", "test"), "equalsAny should return true for single match");
+        
+        // Test non-matches
+        assertFalse(StringUtil.equalsAny("test", "testing", "example"), "equalsAny should return false for no match");
+        assertFalse(StringUtil.equalsAny("test", "TEST", "Test"), "equalsAny should return false for case-sensitive non-match");
+        
+        // Test empty strings
+        assertTrue(StringUtil.equalsAny("", "", "test"), "equalsAny should return true for empty string match");
+        assertFalse(StringUtil.equalsAny("", "test", "example"), "equalsAny should return false for empty string with non-empty search");
+        
+        // Test multiple matches
+        assertTrue(StringUtil.equalsAny("test", "test", "test", "example"), "equalsAny should return true for multiple matches");
+        
+        // Test edge cases
+        assertTrue(StringUtil.equalsAny("a", "a", "b", "c"), "equalsAny should return true for single character match");
+        assertFalse(StringUtil.equalsAny("a", "b", "c", "d"), "equalsAny should return false for single character non-match");
+    }
+
+    /**
+     * Test the equalsAnyIgnoreCase method of StringUtil.
+     * <p>
+     * 测试StringUtil的equalsAnyIgnoreCase方法。
+     */
+    @Test
+    void testEqualsAnyIgnoreCaseMethod() {
+        // Test null handling
+        assertTrue(StringUtil.equalsAnyIgnoreCase(null, null, "test"), "equalsAnyIgnoreCase should return true for null target and null in search");
+        assertFalse(StringUtil.equalsAnyIgnoreCase(null, "test", "example"), "equalsAnyIgnoreCase should return false for null target with non-null search");
+        assertFalse(StringUtil.equalsAnyIgnoreCase("test", (CharSequence[]) null), "equalsAnyIgnoreCase should return false for null search array");
+        assertFalse(StringUtil.equalsAnyIgnoreCase("test"), "equalsAnyIgnoreCase should return false for empty search array");
+        
+        // Test case-insensitive matches
+        assertTrue(StringUtil.equalsAnyIgnoreCase("test", "TEST", "example"), "equalsAnyIgnoreCase should return true for uppercase match");
+        assertTrue(StringUtil.equalsAnyIgnoreCase("TEST", "test", "example"), "equalsAnyIgnoreCase should return true for lowercase match");
+        assertTrue(StringUtil.equalsAnyIgnoreCase("Test", "tEsT", "example"), "equalsAnyIgnoreCase should return true for mixed case match");
+        assertTrue(StringUtil.equalsAnyIgnoreCase("test", "test", "TEST", "Test"), "equalsAnyIgnoreCase should return true for multiple case variations");
+        
+        // Test non-matches
+        assertFalse(StringUtil.equalsAnyIgnoreCase("test", "testing", "example"), "equalsAnyIgnoreCase should return false for no match");
+        assertFalse(StringUtil.equalsAnyIgnoreCase("test", "testing", "TESTING"), "equalsAnyIgnoreCase should return false for different strings");
+        
+        // Test empty strings
+        assertTrue(StringUtil.equalsAnyIgnoreCase("", "", "test"), "equalsAnyIgnoreCase should return true for empty string match");
+        assertFalse(StringUtil.equalsAnyIgnoreCase("", "test", "example"), "equalsAnyIgnoreCase should return false for empty string with non-empty search");
+        
+        // Test multiple matches
+        assertTrue(StringUtil.equalsAnyIgnoreCase("test", "TEST", "test", "example"), "equalsAnyIgnoreCase should return true for multiple matches");
+        
+        // Test edge cases
+        assertTrue(StringUtil.equalsAnyIgnoreCase("A", "a", "b", "c"), "equalsAnyIgnoreCase should return true for single character case-insensitive match");
+        assertFalse(StringUtil.equalsAnyIgnoreCase("A", "b", "c", "d"), "equalsAnyIgnoreCase should return false for single character non-match");
+    }
 }

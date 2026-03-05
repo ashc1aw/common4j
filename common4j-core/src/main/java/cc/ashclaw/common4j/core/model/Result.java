@@ -5,9 +5,8 @@ package cc.ashclaw.common4j.core.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
-import static cc.ashclaw.common4j.core.constant.DateFormats.ISO_DATETIME_WITH_TIMEZONE;
+import cc.ashclaw.common4j.core.date.DateTimeUtil;
 import cc.ashclaw.common4j.core.enums.ResultCode;
 
 /**
@@ -25,7 +24,6 @@ import cc.ashclaw.common4j.core.enums.ResultCode;
 public class Result<T> implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern(ISO_DATETIME_WITH_TIMEZONE);
 
     /**
      * Result code.
@@ -68,7 +66,7 @@ public class Result<T> implements Serializable {
         this.code = code;
         this.message = message;
         this.data = data;
-        this.timestamp = LocalDateTime.now().format(FORMATTER);
+        this.timestamp =DateTimeUtil.format(LocalDateTime.now());
     }
 
     /**
@@ -289,7 +287,7 @@ public class Result<T> implements Serializable {
      *
      * @return true if success, false otherwise
      */
-    public boolean isSuccess() {
+    public boolean success() {
         return code >= 200 && code < 300;
     }
 
@@ -300,8 +298,8 @@ public class Result<T> implements Serializable {
      *
      * @return true if error, false otherwise
      */
-    public boolean isError() {
-        return !isSuccess();
+    public boolean error() {
+        return !success();
     }
 
     @Override

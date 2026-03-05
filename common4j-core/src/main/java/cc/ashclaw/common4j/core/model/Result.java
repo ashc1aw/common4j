@@ -287,7 +287,7 @@ public class Result<T> implements Serializable {
      *
      * @return true if success, false otherwise
      */
-    public boolean isSuccess() {
+    public boolean success() {
         return code >= 200 && code < 300;
     }
 
@@ -298,8 +298,8 @@ public class Result<T> implements Serializable {
      *
      * @return true if error, false otherwise
      */
-    public boolean isError() {
-        return !isSuccess();
+    public boolean error() {
+        return !success();
     }
 
     @Override

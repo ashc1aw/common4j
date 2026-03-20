@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>cc.ashclaw</groupId>
+        <artifactId>common4j</artifactId>
+        <version>1.1.6</version>
+    </parent>
+
+    <artifactId>common4j-web</artifactId>
+    <name>common4j-web</name>
+    <packaging>jar</packaging>
+    <description>AshClaw Common4J Core Library</description>
+    <url>https://github.com/ashc1aw/common4j</url>
+
+    <properties>
+        <jakarta.servlet.version>6.1.0</jakarta.servlet.version>
+    </properties>
+
+    <dependencies>
+        <!-- Jakarta Servlet API -->
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>${jakarta.servlet.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Common4J Core (internal dependency) -->
+        <dependency>
+            <groupId>cc.ashclaw</groupId>
+            <artifactId>common4j-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+
+</project>
